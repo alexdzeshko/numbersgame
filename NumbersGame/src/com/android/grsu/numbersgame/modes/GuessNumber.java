@@ -5,6 +5,7 @@ import java.util.Random;
 import com.android.grsu.numbersgame.BuildConfig;
 import com.android.grsu.numbersgame.R;
 import com.android.grsu.numbersgame.callbacks.FinishCallback;
+import com.android.grsu.numbersgame.modes.common.IMode;
 
 import android.content.Context;
 import android.util.Log;

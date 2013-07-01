@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.android.grsu.numbersgame.R;
 import com.android.grsu.numbersgame.callbacks.FinishCallback;
+import com.android.grsu.numbersgame.modes.common.CommonMode;
 
 public class RememberMore extends CommonMode {
 

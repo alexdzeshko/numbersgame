@@ -1,4 +1,4 @@
-package com.android.grsu.numbersgame.modes;
+package com.android.grsu.numbersgame.modes.common;
 
 import java.util.Random;
 
@@ -13,22 +13,26 @@ public abstract class CommonMode implements IMode {
 	protected Context mContext;
 	protected FinishCallback mCallback;
 	protected TextView mTaskTextView, mResultTextView;
-	
-	protected CommonMode(Context context,
-			TextView tastView, TextView resultView, FinishCallback finishCallback){
+
+	protected CommonMode(Context context, TextView tastView,
+			TextView resultView, FinishCallback finishCallback) {
 		mContext = context;
 		mTaskTextView = tastView;
 		mResultTextView = resultView;
 		mRandom = new Random();
 		mCallback = finishCallback;
 	}
-	
-	protected int nextRandom(){
+
+	protected int nextRandom() {
 		return mRandom.nextInt(9);
 	}
-	
+
+	protected boolean nextBoolean() {
+		return mRandom.nextBoolean();
+	}
+
 	public abstract void gameOver();
-	
+
 	public abstract void reset();
-	
+
 }

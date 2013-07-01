@@ -1,4 +1,4 @@
-package com.android.grsu.numbersgame.modes;
+package com.android.grsu.numbersgame.modes.common;
 
 public interface IMode {
 

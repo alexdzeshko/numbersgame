@@ -1,7 +1,5 @@
 package com.android.grsu.numbersgame.modes;
 
-import java.util.Random;
-
 import android.content.Context;
 import android.util.Log;
 import android.widget.TextView;
@@ -9,36 +7,34 @@ import android.widget.TextView;
 import com.android.grsu.numbersgame.BuildConfig;
 import com.android.grsu.numbersgame.R;
 import com.android.grsu.numbersgame.callbacks.FinishCallback;
+import com.android.grsu.numbersgame.modes.common.CommonMode;
+import com.android.grsu.numbersgame.modes.common.IMode;
 
-public class MultiplyOrDivide implements IMode {
+public class MultiplyOrDivide extends CommonMode implements IMode {
 
 	private static final String LOG_TAG = MultiplyOrDivide.class
 			.getSimpleName();
 
-	private Random mRandom;
-	private Context mContext;
-	private FinishCallback mCallback;
-	private TextView mTaskTextView, mResultTextView;
 	private int mFirstArithmeticMember;
 	private int mSecondArithmeticMember;
 	private int mRightAnswer;
-	private int mUserAnswer;
 	private int mCounter;
 	private String mRightAnswerString;
 	private boolean mOperation;
 
 	private static MultiplyOrDivide instance;
 
-	private MultiplyOrDivide(Context context, TextView textView,
-			FinishCallback finishCallback) {
-		mContext = context;
-		mCallback = finishCallback;
+	private MultiplyOrDivide(Context context, TextView taskTextView,
+			TextView resultTextView, FinishCallback finishCallback) {
+		super(context, taskTextView, resultTextView, finishCallback);
 	}
 
 	public static MultiplyOrDivide getInstance(Context context,
-			TextView textView, FinishCallback finishCallback) {
+			TextView taskTextView, TextView resultTextView,
+			FinishCallback finishCallback) {
 		if (instance == null) {
-			instance = new MultiplyOrDivide(context, textView, finishCallback);
+			instance = new MultiplyOrDivide(context, taskTextView,
+					resultTextView, finishCallback);
 		}
 		return instance;
 	}
@@ -53,29 +49,32 @@ public class MultiplyOrDivide implements IMode {
 		}
 	}
 
-	public void gameOver() {
-		reset();
-		// TODO
-	}
-
 	private void resumeOrFinish() {
 		if (mCounter == mRightAnswerString.length() - 1) {
-			changeViewText(mResultTextView,
-					"Congratulations! you guessed it.. Changing task");
-			changeViewColor(mResultTextView, R.color.green);
-			mCallback.finish();
-			reset();
+			finish();
 		} else {
-			changeViewText(mResultTextView, "Waiting other number...");
-			changeViewColor(mResultTextView, R.color.YellowGreen);
-			mCounter++;
+			resume();
 		}
 	}
 
+	private void finish() {
+		changeViewText(mResultTextView,
+				"Congratulations! you guessed it.. Changing task");
+		changeViewColor(mResultTextView, R.color.green);
+		mCallback.finish();
+		reset();
+	}
+
+	private void resume() {
+		changeViewText(mResultTextView, "Waiting other number...");
+		changeViewColor(mResultTextView, R.color.YellowGreen);
+		mCounter++;
+	}
+
 	private void prepareTask() {
-		mFirstArithmeticMember = mRandom.nextInt(10);
-		mSecondArithmeticMember = mRandom.nextInt(10);
-		mOperation = mRandom.nextBoolean();
+		mFirstArithmeticMember = nextRandom();
+		mSecondArithmeticMember = nextRandom();
+		mOperation = nextBoolean();
 		if (mOperation) {
 			mRightAnswer = mFirstArithmeticMember * mSecondArithmeticMember;
 		} else {
@@ -86,10 +85,6 @@ public class MultiplyOrDivide implements IMode {
 			}
 		}
 		mRightAnswerString = String.valueOf(mRightAnswer);
-	}
-
-	private void reset() {
-		mCounter = 0;
 	}
 
 	private void changeViewColor(TextView view, int resColor) {
@@ -122,8 +117,21 @@ public class MultiplyOrDivide implements IMode {
 
 	@Override
 	public void startNewGame() {
+		reset();
 		prepareTask();
 		prepareTaskString();
+	}
+
+	@Override
+	public void gameOver() {
+		reset();
+		changeViewColor(mResultTextView, R.color.red);
+		mCallback.finish();
+	}
+
+	@Override
+	public void reset() {
+		mCounter = 0;
 	}
 
 }

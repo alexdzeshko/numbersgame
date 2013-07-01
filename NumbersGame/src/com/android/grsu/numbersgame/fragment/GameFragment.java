@@ -16,8 +16,8 @@ import com.android.grsu.numbersgame.R;
 import com.android.grsu.numbersgame.callbacks.ActivityCallback;
 import com.android.grsu.numbersgame.callbacks.FinishCallback;
 import com.android.grsu.numbersgame.modes.GuessNumber;
-import com.android.grsu.numbersgame.modes.IMode;
 import com.android.grsu.numbersgame.modes.RememberMore;
+import com.android.grsu.numbersgame.modes.common.IMode;
 
 public class GameFragment extends Fragment implements OnClickListener {
 
