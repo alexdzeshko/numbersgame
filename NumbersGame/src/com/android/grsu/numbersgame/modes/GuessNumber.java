@@ -15,7 +15,7 @@ public class GuessNumber implements IMode {
 
 	private static final String LOG_TAG = GuessNumber.class.getSimpleName();
 
-	private static volatile GuessNumber instance;
+	// private static GuessNumber instance;
 
 	private int mRightNumber, mAttempts;
 	private Context mContext;
