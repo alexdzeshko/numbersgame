@@ -6,19 +6,22 @@ import com.android.grsu.numbersgame.R;
 import com.android.grsu.numbersgame.callbacks.FinishCallback;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.TextView;
 
 public class GuessNumber implements IMode {
 
+	private static final String LOG_TAG = GuessNumber.class.getSimpleName();
+	
 	private static volatile GuessNumber instance;
 
-	private int mRightNumber, mAttempts, mPressedButton;
+	private int mRightNumber, mAttempts;
 	private Context mContext;
 	private Random mRandom;
 	private TextView mTextView;
 	private FinishCallback mCallback;
 
-	private GuessNumber(Context context, TextView textView,
+	public GuessNumber(Context context, TextView textView,
 			FinishCallback finishCallback) {
 		mContext = context;
 		mTextView = textView;
@@ -28,25 +31,20 @@ public class GuessNumber implements IMode {
 	}
 
 	/** Double Checked Locking Singleton & volatile */
-	public static GuessNumber getInstance(Context context, TextView textView,
-			FinishCallback finishCallback) {
-		GuessNumber localInstance = instance;
-		if (localInstance == null) {
-			synchronized (GuessNumber.class) {
-				localInstance = instance;
-				if (localInstance == null) {
-					instance = localInstance = new GuessNumber(context,
-							textView, finishCallback);
-				}
-			}
-		}
-		return localInstance;
-	}
-
-	public void newGame() {
-		reset();
-		changeViewColor(R.color.white);
-	}
+	// public static GuessNumber getInstance(Context context, TextView textView,
+	// FinishCallback finishCallback) {
+	// GuessNumber localInstance = instance;
+	// if (localInstance == null) {
+	// synchronized (GuessNumber.class) {
+	// localInstance = instance;
+	// if (localInstance == null) {
+	// instance = localInstance = new GuessNumber(context,
+	// textView, finishCallback);
+	// }
+	// }
+	// }
+	// return localInstance;
+	// }
 
 	public void gameOver() {
 		reset();
@@ -61,11 +59,11 @@ public class GuessNumber implements IMode {
 		}
 		if (guessNumber > mRightNumber) {
 			mAttempts++;
-			changeViewText("Less");
+			changeViewText("Less than " + guessNumber);
 		}
 		if (guessNumber < mRightNumber) {
 			mAttempts++;
-			changeViewText("More");
+			changeViewText("More than " + guessNumber);
 		}
 		if (guessNumber == mRightNumber) {
 			changeViewText("Congratulations! you guessed it.. Changing number");
@@ -82,7 +80,7 @@ public class GuessNumber implements IMode {
 	private void reset() {
 		changeRightNumber();
 		mAttempts = 0;
-		mRightNumber = -1;
+
 	}
 
 	private void changeRightNumber() {
@@ -101,6 +99,16 @@ public class GuessNumber implements IMode {
 	@Override
 	public void buttonPressed(int button) {
 		makeGuess(button);
+
+		Log.d(LOG_TAG, "buttonPressed: " + button);
+	}
+
+	@Override
+	public void startNewGame() {
+		mTextView.setText("");
+		reset();
+		changeViewColor(R.color.white);
+
 	}
 
 }
