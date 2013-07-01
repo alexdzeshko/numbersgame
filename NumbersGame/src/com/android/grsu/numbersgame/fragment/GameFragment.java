@@ -17,6 +17,7 @@ import com.android.grsu.numbersgame.callbacks.ActivityCallback;
 import com.android.grsu.numbersgame.callbacks.FinishCallback;
 import com.android.grsu.numbersgame.modes.GuessNumber;
 import com.android.grsu.numbersgame.modes.IMode;
+import com.android.grsu.numbersgame.modes.RememberMore;
 
 public class GameFragment extends Fragment implements OnClickListener {
 
@@ -26,48 +27,61 @@ public class GameFragment extends Fragment implements OnClickListener {
 	private TextView mTextViewTask, mTextViewResult;
 	private IMode mGameManager;
 	private ActivityCallback mActivityCallback;
+	private FinishCallback mFinishCallback;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mMode = getArguments().getInt(MODE_NUMBER);
+		mFinishCallback = new FinishCallback() {
+
+			@Override
+			public void finish() {
+				mGameManager.startNewGame();
+				AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(
+						getActivity());
+				dialogBuilder
+						.setMessage("New game?")
+						.setPositiveButton("Yes",
+								new DialogInterface.OnClickListener() {
+
+									@Override
+									public void onClick(DialogInterface dialog,
+											int which) {
+
+									};
+
+								})
+						.setNegativeButton("No",
+								new DialogInterface.OnClickListener() {
+
+									@Override
+									public void onClick(DialogInterface dialog,
+											int which) {
+										mActivityCallback.openDrawer(true);
+
+									}
+								}).show();
+
+			}
+		};
+
 	}
 
 	private void initMode() {
 		switch (mMode) {
 		case 0:
-			mGameManager = new GuessNumber(getActivity(),
-					mTextViewResult, new FinishCallback() {
-
-						@Override
-						public void finish() {
-							AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
-							dialogBuilder.setMessage("New game?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-								
-								@Override
-								public void onClick(DialogInterface dialog, int which) {
-									mGameManager.startNewGame();
-								
-							};
-
-								
-							}).setNegativeButton("No", new DialogInterface.OnClickListener() {
-								
-								@Override
-								public void onClick(DialogInterface dialog, int which) {
-									mActivityCallback.openDrawer(true);
-									
-								}
-							}).show();
-
-						}
-					});
+			mGameManager = new GuessNumber(getActivity(), mTextViewResult,
+					mFinishCallback);
 			break;
-
+		case 1:
+			mGameManager = new RememberMore(getActivity(), mTextViewTask,
+					mTextViewResult, mFinishCallback);
 		default:
 			break;
 		}
 
+		mGameManager.startNewGame();
 	}
 
 	@Override
@@ -96,9 +110,9 @@ public class GameFragment extends Fragment implements OnClickListener {
 		button8.setOnClickListener(this);
 		button9.setOnClickListener(this);
 		button0.setOnClickListener(this);
-		
+
 		initMode();
-		
+
 		return view;
 	}
 
@@ -114,7 +128,7 @@ public class GameFragment extends Fragment implements OnClickListener {
 		if (!(activity instanceof ActivityCallback))
 			throw new IllegalArgumentException(
 					"Activity must implements ActivityCallback");
-		mActivityCallback= (ActivityCallback) activity;
+		mActivityCallback = (ActivityCallback) activity;
 		super.onAttach(activity);
 	}
 
