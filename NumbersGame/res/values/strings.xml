@@ -10,7 +10,7 @@
 
     <!-- Modes -->
     <string name="mode1">Guess number</string>
-    <string name="mode2">mode2</string>
+    <string name="mode2">Remember more</string>
     <string name="mode3">mode3</string>
     <string name="mode4">mode4</string>
     <string name="mode5">mode5</string>
