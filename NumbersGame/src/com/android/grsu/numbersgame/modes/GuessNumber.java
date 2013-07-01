@@ -2,6 +2,7 @@ package com.android.grsu.numbersgame.modes;
 
 import java.util.Random;
 
+import com.android.grsu.numbersgame.BuildConfig;
 import com.android.grsu.numbersgame.R;
 import com.android.grsu.numbersgame.callbacks.FinishCallback;
 
@@ -12,7 +13,7 @@ import android.widget.TextView;
 public class GuessNumber implements IMode {
 
 	private static final String LOG_TAG = GuessNumber.class.getSimpleName();
-	
+
 	private static volatile GuessNumber instance;
 
 	private int mRightNumber, mAttempts;
@@ -80,7 +81,6 @@ public class GuessNumber implements IMode {
 	private void reset() {
 		changeRightNumber();
 		mAttempts = 0;
-
 	}
 
 	private void changeRightNumber() {
@@ -99,8 +99,9 @@ public class GuessNumber implements IMode {
 	@Override
 	public void buttonPressed(int button) {
 		makeGuess(button);
-
-		Log.d(LOG_TAG, "buttonPressed: " + button);
+		if (BuildConfig.DEBUG) {
+			Log.d(LOG_TAG, "buttonPressed: " + button);
+		}
 	}
 
 	@Override
