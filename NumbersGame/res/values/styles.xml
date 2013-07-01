@@ -17,4 +17,8 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
+    <style name="styleButton" parent="android:Widget.Holo.Light.Button">
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:textColor">@color/WhiteSmoke</item>
+    </style>
 </resources>

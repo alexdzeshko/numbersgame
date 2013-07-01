@@ -4,6 +4,9 @@
     <string name="app_name">NumbersGame</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    
+    <string name="task">Task</string>
+    <string name="result">Result</string>
 
     <!-- Modes -->
     <string name="mode1">mode1</string>
