@@ -6,4 +6,7 @@
     -->
     <dimen name="activity_horizontal_margin">128dp</dimen>
 
+        <!-- GameFragment dimens -->
+	<dimen name="text_view_task_padding">32dp</dimen>
+    
 </resources>

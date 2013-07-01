@@ -5,4 +5,7 @@
          screen margins) for sw600dp devices (e.g. 7" tablets) here.
     -->
 
+    <!-- GameFragment dimens -->
+	<dimen name="text_view_task_padding">16dp</dimen>
+
 </resources>
