@@ -5,20 +5,19 @@
     android:orientation="vertical" >
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        android:text="@string/task" />
+        android:text="@string/task"
+        style="@style/styleText" />
 
     <TextView
         android:id="@+id/text_view_task"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:padding="@dimen/text_view_task_padding" />
+        style="@style/styleText" />
 
     <TableLayout
-        android:id="@+id/TableLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
@@ -29,6 +28,21 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_view_task_padding"
                 android:background="@color/Blue"
+                android:orientation="vertical" >
+
+                <Button
+                    android:id="@+id/button0"
+                    style="@style/styleButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/button0" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_view_task_padding"
+                android:background="@color/Aqua"
                 android:orientation="vertical" >
 
                 <Button
@@ -117,19 +131,70 @@
                     android:text="@string/button6" />
             </LinearLayout>
         </TableRow>
+
+        <TableRow android:gravity="center" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_view_task_padding"
+                android:background="@color/GreenYellow"
+                android:orientation="vertical" >
+
+                <Button
+                    android:id="@+id/button7"
+                    style="@style/styleButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/button7" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_view_task_padding"
+                android:background="@color/BlueViolet"
+                android:orientation="vertical" >
+
+                <Button
+                    android:id="@+id/button8"
+                    style="@style/styleButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/button8" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow android:gravity="center" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_view_task_padding"
+                android:background="@color/Gray"
+                android:orientation="vertical" >
+
+                <Button
+                    android:id="@+id/button9"
+                    style="@style/styleButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/button9" />
+            </LinearLayout>
+        </TableRow>
     </TableLayout>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        android:text="@string/result" />
+        android:text="@string/result"
+        style="@style/styleText" />
 
     <TextView
         android:id="@+id/text_view_results"
+        style="@style/styleText"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:padding="@dimen/text_view_task_padding" />
+        android:layout_weight="1" />
 
 </LinearLayout>
