@@ -39,7 +39,7 @@ public class GuessNumber {
 	}
 
 	public void makeGuess(int guessNumber) {
-		if (guessNumber < 0 || guessNumber > 8) {
+		if (guessNumber < 0 || guessNumber > 9) {
 			showToast("This number does not exists in this game!");
 		}
 		if (guessNumber > mRightNumber) {
