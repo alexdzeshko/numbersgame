@@ -8,15 +8,14 @@ import com.android.grsu.numbersgame.callbacks.FinishCallback;
 import android.content.Context;
 import android.widget.TextView;
 
-public class GuessNumber {
+public class GuessNumber implements IMode {
 
 	private static volatile GuessNumber instance;
 
-	private int mRightNumber;
+	private int mRightNumber, mAttempts, mPressedButton;
 	private Context mContext;
 	private Random mRandom;
 	private TextView mTextView;
-	private int mAttempts;
 	private FinishCallback mCallback;
 
 	private GuessNumber(Context context, TextView textView,
@@ -24,6 +23,7 @@ public class GuessNumber {
 		mContext = context;
 		mTextView = textView;
 		mRandom = new Random();
+		mCallback = finishCallback;
 		changeRightNumber();
 	}
 
@@ -96,6 +96,11 @@ public class GuessNumber {
 
 	private void changeViewText(String text) {
 		mTextView.setText(text);
+	}
+
+	@Override
+	public void buttonPressed(int button) {
+		makeGuess(button);
 	}
 
 }

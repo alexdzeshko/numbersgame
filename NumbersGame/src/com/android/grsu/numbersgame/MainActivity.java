@@ -28,12 +28,13 @@ public class MainActivity extends FragmentActivity {
 
 		mModeTitles = getResources().getStringArray(R.array.modes_array);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer);
-
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		// Set the adapter for the list view
 		mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-				android.R.layout.simple_list_item_1, mModeTitles));
+				R.layout.adapter_drawer, mModeTitles));
 		// Set the list's click listener
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+		
 	}
 
 	@Override
