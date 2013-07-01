@@ -1,5 +1,8 @@
 package com.android.grsu.numbersgame.fragment;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.grsu.numbersgame.R;
+import com.android.grsu.numbersgame.callbacks.ActivityCallback;
 import com.android.grsu.numbersgame.callbacks.FinishCallback;
 import com.android.grsu.numbersgame.modes.GuessNumber;
 import com.android.grsu.numbersgame.modes.IMode;
@@ -21,6 +25,7 @@ public class GameFragment extends Fragment implements OnClickListener {
 	private int mMode;
 	private TextView mTextViewTask, mTextViewResult;
 	private IMode mGameManager;
+	private ActivityCallback mActivityCallback;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -31,12 +36,29 @@ public class GameFragment extends Fragment implements OnClickListener {
 	private void initMode() {
 		switch (mMode) {
 		case 0:
-			mGameManager = GuessNumber.getInstance(getActivity(),
+			mGameManager = new GuessNumber(getActivity(),
 					mTextViewResult, new FinishCallback() {
 
 						@Override
 						public void finish() {
-							// TODO Auto-generated method stub
+							AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+							dialogBuilder.setMessage("New game?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+								
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+									mGameManager.startNewGame();
+								
+							};
+
+								
+							}).setNegativeButton("No", new DialogInterface.OnClickListener() {
+								
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+									mActivityCallback.openDrawer(true);
+									
+								}
+							}).show();
 
 						}
 					});
@@ -85,6 +107,15 @@ public class GameFragment extends Fragment implements OnClickListener {
 		mGameManager.buttonPressed(Integer.valueOf(((Button) v).getText()
 				.toString()));
 
+	}
+
+	@Override
+	public void onAttach(Activity activity) {
+		if (!(activity instanceof ActivityCallback))
+			throw new IllegalArgumentException(
+					"Activity must implements ActivityCallback");
+		mActivityCallback= (ActivityCallback) activity;
+		super.onAttach(activity);
 	}
 
 }

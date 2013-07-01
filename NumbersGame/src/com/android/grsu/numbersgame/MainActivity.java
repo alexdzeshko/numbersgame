@@ -12,9 +12,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.android.grsu.numbersgame.callbacks.ActivityCallback;
 import com.android.grsu.numbersgame.fragment.GameFragment;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements ActivityCallback {
 
 	private String[] mModeTitles;
 	private ListView mDrawerList;
@@ -34,7 +35,8 @@ public class MainActivity extends FragmentActivity {
 				R.layout.adapter_drawer, mModeTitles));
 		// Set the list's click listener
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-		
+		selectItem(0);
+		mDrawerLayout.openDrawer(mDrawerList);
 	}
 
 	@Override
@@ -78,5 +80,13 @@ public class MainActivity extends FragmentActivity {
 	public void setTitle(CharSequence title) {
 		mTitle = title;
 		getActionBar().setTitle(mTitle);
+	}
+
+	@Override
+	public void openDrawer(boolean open) {
+		if(open)
+			mDrawerLayout.openDrawer(mDrawerList);
+		else mDrawerLayout.closeDrawer(mDrawerList);
+		
 	}
 }
