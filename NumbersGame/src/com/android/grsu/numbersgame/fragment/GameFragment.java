@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.android.grsu.numbersgame.R;
 
@@ -20,7 +21,9 @@ public class GameFragment extends Fragment implements OnClickListener {
 	private static final int BUTTON_4 = R.id.button4;
 	private static final int BUTTON_5 = R.id.button5;
 	private static final int BUTTON_6 = R.id.button6;
+	
 	private int mMode;
+	private TextView mTextViewTask, mTextViewResult;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,8 @@ public class GameFragment extends Fragment implements OnClickListener {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_game, null);
+		mTextViewTask = (TextView) view.findViewById(R.id.text_view_task);
+		mTextViewResult = (TextView) view.findViewById(R.id.text_view_results);
 		Button button1 = (Button) view.findViewById(BUTTON_1);
 		Button button2 = (Button) view.findViewById(BUTTON_2);
 		Button button3 = (Button) view.findViewById(BUTTON_3);
