@@ -2,8 +2,11 @@ package com.android.grsu.numbersgame.modes;
 
 import java.util.Random;
 
+import com.android.grsu.numbersgame.R;
+import com.android.grsu.numbersgame.callbacks.FinishCallback;
+
 import android.content.Context;
-import android.widget.Toast;
+import android.widget.TextView;
 
 public class GuessNumber {
 
@@ -12,21 +15,28 @@ public class GuessNumber {
 	private int mRightNumber;
 	private Context mContext;
 	private Random mRandom;
+	private TextView mTextView;
+	private int mAttempts;
+	private FinishCallback mCallback;
 
-	private GuessNumber(Context context) {
+	private GuessNumber(Context context, TextView textView,
+			FinishCallback finishCallback) {
 		mContext = context;
+		mTextView = textView;
 		mRandom = new Random();
 		changeRightNumber();
 	}
 
 	/** Double Checked Locking Singleton & volatile */
-	public static GuessNumber getInstance(Context context) {
+	public static GuessNumber getInstance(Context context, TextView textView,
+			FinishCallback finishCallback) {
 		GuessNumber localInstance = instance;
 		if (localInstance == null) {
 			synchronized (GuessNumber.class) {
 				localInstance = instance;
 				if (localInstance == null) {
-					instance = localInstance = new GuessNumber(context);
+					instance = localInstance = new GuessNumber(context,
+							textView, finishCallback);
 				}
 			}
 		}
@@ -34,31 +44,58 @@ public class GuessNumber {
 	}
 
 	public void newGame() {
-		mRightNumber = -1;
-		changeRightNumber();
+		reset();
+		changeViewColor(R.color.white);
+	}
+
+	public void gameOver() {
+		reset();
+		changeViewColor(R.color.red);
+		mCallback.finish();
 	}
 
 	public void makeGuess(int guessNumber) {
 		if (guessNumber < 0 || guessNumber > 9) {
-			showToast("This number does not exists in this game!");
+			changeViewText("This number does not exists in this game!");
+			gameOver();
 		}
 		if (guessNumber > mRightNumber) {
-			showToast("Less");
+			mAttempts++;
+			changeViewText("Less");
 		}
 		if (guessNumber < mRightNumber) {
-			showToast("More");
+			mAttempts++;
+			changeViewText("More");
 		}
 		if (guessNumber == mRightNumber) {
-			showToast("Congratulations! you guessed it.. Changing number");
-			newGame();
+			changeViewText("Congratulations! you guessed it.. Changing number");
+			changeViewColor(R.color.green);
+			reset();
+			mCallback.finish();
+			return;
 		}
+		if (mAttempts == 4) {
+			gameOver();
+		}
+	}
+
+	private void reset() {
+		changeRightNumber();
+		mAttempts = 0;
+		mRightNumber = -1;
 	}
 
 	private void changeRightNumber() {
 		mRightNumber = mRandom.nextInt(9);
 	}
 
-	private void showToast(String message) {
-		Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
+	private void changeViewColor(int resColor) {
+		mTextView
+				.setBackgroundColor(mContext.getResources().getColor(resColor));
 	}
+
+	private void changeViewText(String text) {
+		mTextView.setText(text);
+	}
+
 }
