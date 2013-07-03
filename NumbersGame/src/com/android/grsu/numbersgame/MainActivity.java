@@ -107,4 +107,8 @@ public class MainActivity extends FragmentActivity implements ActivityCallback {
 			mDrawerLayout.closeDrawer(mDrawerList);
 
 	}
+	@Override
+	public SoundManager getSoundManager() {
+		return mSoundManager;
+	}
 }

@@ -2,14 +2,15 @@ package com.android.grsu.numbersgame.modes;
 
 import java.util.Random;
 
+import android.content.Context;
+import android.util.Log;
+import android.widget.TextView;
+
 import com.android.grsu.numbersgame.BuildConfig;
 import com.android.grsu.numbersgame.R;
 import com.android.grsu.numbersgame.callbacks.FinishCallback;
 import com.android.grsu.numbersgame.modes.common.IMode;
-
-import android.content.Context;
-import android.util.Log;
-import android.widget.TextView;
+import com.android.grsu.numbersgame.sound.SoundManager;
 
 public class GuessNumber implements IMode {
 
@@ -22,13 +23,15 @@ public class GuessNumber implements IMode {
 	private Random mRandom;
 	private TextView mTextView;
 	private FinishCallback mCallback;
+	private SoundManager mSoundManager;
 
 	public GuessNumber(Context context, TextView textView,
-			FinishCallback finishCallback) {
+			FinishCallback finishCallback, SoundManager soundManager) {
 		mContext = context;
 		mTextView = textView;
 		mRandom = new Random();
 		mCallback = finishCallback;
+		mSoundManager = soundManager;
 		changeRightNumber();
 	}
 
@@ -61,10 +64,12 @@ public class GuessNumber implements IMode {
 		}
 		if (guessNumber > mRightNumber) {
 			mAttempts++;
+			mSoundManager.playSignal(SoundManager.LESS);
 			changeViewText("Less than " + guessNumber);
 		}
 		if (guessNumber < mRightNumber) {
 			mAttempts++;
+			mSoundManager.playSignal(SoundManager.MORE);
 			changeViewText("More than " + guessNumber);
 		}
 		if (guessNumber == mRightNumber) {

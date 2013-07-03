@@ -18,6 +18,7 @@ import com.android.grsu.numbersgame.callbacks.FinishCallback;
 import com.android.grsu.numbersgame.modes.GuessNumber;
 import com.android.grsu.numbersgame.modes.RememberMore;
 import com.android.grsu.numbersgame.modes.common.IMode;
+import com.android.grsu.numbersgame.sound.SoundManager;
 
 public class GameFragment extends Fragment implements OnClickListener {
 
@@ -28,6 +29,7 @@ public class GameFragment extends Fragment implements OnClickListener {
 	private IMode mGameManager;
 	private ActivityCallback mActivityCallback;
 	private FinishCallback mFinishCallback;
+	private SoundManager mSoundManager;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -72,7 +74,7 @@ public class GameFragment extends Fragment implements OnClickListener {
 		switch (mMode) {
 		case 0:
 			mGameManager = new GuessNumber(getActivity(), mTextViewResult,
-					mFinishCallback);
+					mFinishCallback, mSoundManager);
 			break;
 		case 1:
 			mGameManager = new RememberMore(getActivity(), mTextViewTask,
@@ -120,7 +122,6 @@ public class GameFragment extends Fragment implements OnClickListener {
 	public void onClick(View v) {
 		mGameManager.buttonPressed(Integer.valueOf(((Button) v).getText()
 				.toString()));
-
 	}
 
 	@Override
@@ -129,6 +130,7 @@ public class GameFragment extends Fragment implements OnClickListener {
 			throw new IllegalArgumentException(
 					"Activity must implements ActivityCallback");
 		mActivityCallback = (ActivityCallback) activity;
+		mSoundManager = mActivityCallback.getSoundManager();
 		super.onAttach(activity);
 	}
 
