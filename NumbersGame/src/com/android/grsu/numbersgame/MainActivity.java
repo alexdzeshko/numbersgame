@@ -14,6 +14,7 @@ import android.widget.ListView;
 
 import com.android.grsu.numbersgame.callbacks.ActivityCallback;
 import com.android.grsu.numbersgame.fragment.GameFragment;
+import com.android.grsu.numbersgame.sound.SoundManager;
 
 public class MainActivity extends FragmentActivity implements ActivityCallback {
 
@@ -21,7 +22,7 @@ public class MainActivity extends FragmentActivity implements ActivityCallback {
 	private ListView mDrawerList;
 	private CharSequence mTitle;
 	private DrawerLayout mDrawerLayout;
-
+	private SoundManager mSoundManager;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -37,6 +38,22 @@ public class MainActivity extends FragmentActivity implements ActivityCallback {
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 		selectItem(0);
 		mDrawerLayout.openDrawer(mDrawerList);
+		mSoundManager = new SoundManager(this, R.raw.fon);
+	}
+	@Override
+	public void onResume(){
+		super.onResume();
+		mSoundManager.playBackgroundMusic();
+	}
+	@Override
+	public void onPause(){
+		super.onPause();
+		mSoundManager.pauseBackgroundMusic();
+	}
+	@Override
+	public void onStop() {
+		super.onStop();
+		mSoundManager.stopBackgroundMusic();
 	}
 
 	@Override
@@ -84,9 +101,10 @@ public class MainActivity extends FragmentActivity implements ActivityCallback {
 
 	@Override
 	public void openDrawer(boolean open) {
-		if(open)
+		if (open)
 			mDrawerLayout.openDrawer(mDrawerList);
-		else mDrawerLayout.closeDrawer(mDrawerList);
-		
+		else
+			mDrawerLayout.closeDrawer(mDrawerList);
+
 	}
 }
