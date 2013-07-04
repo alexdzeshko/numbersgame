@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.android.grsu.numbersgame.BuildConfig;
 import com.android.grsu.numbersgame.R;
-import com.android.grsu.numbersgame.callbacks.FinishCallback;
+import com.android.grsu.numbersgame.callbacks.OnFinishListener;
 import com.android.grsu.numbersgame.modes.common.CommonMode;
 
 public class SummOrSubtract extends CommonMode {
@@ -23,13 +23,13 @@ public class SummOrSubtract extends CommonMode {
 	private static SummOrSubtract instance;
 
 	private SummOrSubtract(Context context, TextView tastView,
-			TextView resultView, FinishCallback finishCallback) {
+			TextView resultView, OnFinishListener finishCallback) {
 		super(context, tastView, resultView, finishCallback);
 	}
 
 	public static SummOrSubtract getInstance(Context context,
 			TextView tastView, TextView resultView,
-			FinishCallback finishCallback) {
+			OnFinishListener finishCallback) {
 		if (instance == null) {
 			instance = new SummOrSubtract(context, tastView, resultView,
 					finishCallback);
@@ -37,7 +37,7 @@ public class SummOrSubtract extends CommonMode {
 		return instance;
 	}
 
-	public void makeGuess(int button) {
+	private void makeGuess(int button) {
 		int currentNumber = Integer
 				.valueOf(mRightAnswerString.charAt(mCounter));
 		if (currentNumber == button) {
@@ -59,7 +59,7 @@ public class SummOrSubtract extends CommonMode {
 		changeViewText(mResultTextView,
 				"Congratulations! you guessed it.. Changing task");
 		changeViewColor(mResultTextView, R.color.green);
-		mCallback.finish();
+		mListener.finish();
 		reset();
 	}
 
@@ -83,14 +83,6 @@ public class SummOrSubtract extends CommonMode {
 			}
 		}
 		mRightAnswerString = String.valueOf(mRightAnswer);
-	}
-
-	private void changeViewColor(TextView view, int resColor) {
-		view.setBackgroundColor(mContext.getResources().getColor(resColor));
-	}
-
-	private void changeViewText(TextView view, String text) {
-		view.setText(text);
 	}
 
 	private void prepareTaskString() {
@@ -124,7 +116,7 @@ public class SummOrSubtract extends CommonMode {
 	public void gameOver() {
 		reset();
 		changeViewColor(mResultTextView, R.color.red);
-		mCallback.finish();
+		mListener.finish();
 	}
 
 	@Override

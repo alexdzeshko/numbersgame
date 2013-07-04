@@ -8,46 +8,28 @@ import android.widget.TextView;
 
 import com.android.grsu.numbersgame.BuildConfig;
 import com.android.grsu.numbersgame.R;
-import com.android.grsu.numbersgame.callbacks.FinishCallback;
+import com.android.grsu.numbersgame.callbacks.OnFinishListener;
 import com.android.grsu.numbersgame.modes.common.IMode;
 import com.android.grsu.numbersgame.sound.SoundManager;
 
 public class GuessNumber extends IMode {
 
 	private static final String LOG_TAG = GuessNumber.class.getSimpleName();
-
-	// private static GuessNumber instance;
-
+	// TODO make singleton
 	private int mRightNumber, mAttempts;
 	private Context mContext;
 	private Random mRandom;
 	private TextView mTextView;
-	private FinishCallback mCallback;
+	private OnFinishListener mCallback;
 
 	public GuessNumber(Context context, TextView textView,
-			FinishCallback finishCallback) {
+			OnFinishListener finishCallback) {
 		mContext = context;
 		mTextView = textView;
 		mRandom = new Random();
 		mCallback = finishCallback;
 		changeRightNumber();
 	}
-
-	/** Double Checked Locking Singleton & volatile */
-	// public static GuessNumber getInstance(Context context, TextView textView,
-	// FinishCallback finishCallback) {
-	// GuessNumber localInstance = instance;
-	// if (localInstance == null) {
-	// synchronized (GuessNumber.class) {
-	// localInstance = instance;
-	// if (localInstance == null) {
-	// instance = localInstance = new GuessNumber(context,
-	// textView, finishCallback);
-	// }
-	// }
-	// }
-	// return localInstance;
-	// }
 
 	public void gameOver() {
 		reset();
@@ -82,8 +64,7 @@ public class GuessNumber extends IMode {
 		}
 		if (mAttempts == 4) {
 			gameOver();
-		}
-		else if(signal != null){
+		} else if (signal != null) {
 			playSignal(signal);
 		}
 	}

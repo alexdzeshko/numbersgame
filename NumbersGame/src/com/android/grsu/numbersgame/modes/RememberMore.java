@@ -7,13 +7,13 @@ import android.content.Context;
 import android.widget.TextView;
 
 import com.android.grsu.numbersgame.R;
-import com.android.grsu.numbersgame.callbacks.FinishCallback;
+import com.android.grsu.numbersgame.callbacks.OnFinishListener;
 import com.android.grsu.numbersgame.modes.common.CommonMode;
 
 public class RememberMore extends CommonMode {
 
 	public RememberMore(Context context, TextView tastView,
-			TextView resultView, FinishCallback finishCallback) {
+			TextView resultView, OnFinishListener finishCallback) {
 		super(context, tastView, resultView, finishCallback);
 	}
 
@@ -30,7 +30,8 @@ public class RememberMore extends CommonMode {
 			mQueueNew.add(mQueueOld.poll());
 			if (mQueueOld.size() != 0) {
 				isTyping = true;
-				mResultTextView.setText("You pressed "+button+". Press next number");
+				mResultTextView.setText("You pressed " + button
+						+ ". Press next number");
 			} else {
 				isTyping = false;
 				showNext();
@@ -63,17 +64,13 @@ public class RememberMore extends CommonMode {
 	public void gameOver() {
 		reset();
 		changeViewColor(mResultTextView, R.color.red);
-		mCallback.finish();
+		mListener.finish();
 	}
 
 	public void showNext() {
 		int next = nextRandom();
 		mQueueNew.add(next);
 		mResultTextView.setText("Next number is " + next);
-	}
-
-	private void changeViewColor(TextView textView, int resColor) {
-		textView.setBackgroundColor(mContext.getResources().getColor(resColor));
 	}
 
 }

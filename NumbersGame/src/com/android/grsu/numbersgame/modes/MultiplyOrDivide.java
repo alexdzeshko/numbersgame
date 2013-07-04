@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.android.grsu.numbersgame.BuildConfig;
 import com.android.grsu.numbersgame.R;
-import com.android.grsu.numbersgame.callbacks.FinishCallback;
+import com.android.grsu.numbersgame.callbacks.OnFinishListener;
 import com.android.grsu.numbersgame.modes.common.CommonMode;
 
 public class MultiplyOrDivide extends CommonMode {
@@ -24,13 +24,13 @@ public class MultiplyOrDivide extends CommonMode {
 	private static MultiplyOrDivide instance;
 
 	private MultiplyOrDivide(Context context, TextView taskTextView,
-			TextView resultTextView, FinishCallback finishCallback) {
+			TextView resultTextView, OnFinishListener finishCallback) {
 		super(context, taskTextView, resultTextView, finishCallback);
 	}
 
 	public static MultiplyOrDivide getInstance(Context context,
 			TextView taskTextView, TextView resultTextView,
-			FinishCallback finishCallback) {
+			OnFinishListener finishCallback) {
 		if (instance == null) {
 			instance = new MultiplyOrDivide(context, taskTextView,
 					resultTextView, finishCallback);
@@ -38,7 +38,7 @@ public class MultiplyOrDivide extends CommonMode {
 		return instance;
 	}
 
-	public void makeGuess(int button) {
+	private void makeGuess(int button) {
 		int currentNumber = Integer
 				.valueOf(mRightAnswerString.charAt(mCounter));
 		if (currentNumber == button) {
@@ -60,7 +60,7 @@ public class MultiplyOrDivide extends CommonMode {
 		changeViewText(mResultTextView,
 				"Congratulations! you guessed it.. Changing task");
 		changeViewColor(mResultTextView, R.color.green);
-		mCallback.finish();
+		mListener.finish();
 		reset();
 	}
 
@@ -84,14 +84,7 @@ public class MultiplyOrDivide extends CommonMode {
 			}
 		}
 		mRightAnswerString = String.valueOf(mRightAnswer);
-	}
-
-	private void changeViewColor(TextView view, int resColor) {
-		view.setBackgroundColor(mContext.getResources().getColor(resColor));
-	}
-
-	private void changeViewText(TextView view, String text) {
-		view.setText(text);
+		prepareTaskString();
 	}
 
 	private void prepareTaskString() {
@@ -118,14 +111,13 @@ public class MultiplyOrDivide extends CommonMode {
 	public void startNewGame() {
 		reset();
 		prepareTask();
-		prepareTaskString();
 	}
 
 	@Override
 	public void gameOver() {
 		reset();
 		changeViewColor(mResultTextView, R.color.red);
-		mCallback.finish();
+		mListener.finish();
 	}
 
 	@Override

@@ -5,22 +5,30 @@ import java.util.Random;
 import android.content.Context;
 import android.widget.TextView;
 
-import com.android.grsu.numbersgame.callbacks.FinishCallback;
+import com.android.grsu.numbersgame.callbacks.OnFinishListener;
 
 public abstract class CommonMode extends IMode {
 
 	private Random mRandom;
 	protected Context mContext;
-	protected FinishCallback mCallback;
+	protected OnFinishListener mListener;
 	protected TextView mTaskTextView, mResultTextView;
 
-	protected CommonMode(Context context, TextView tastView,
-			TextView resultView, FinishCallback finishCallback) {
+	protected CommonMode(Context context, TextView taskView,
+			TextView resultView, OnFinishListener listener) {
 		mContext = context;
-		mTaskTextView = tastView;
+		mTaskTextView = taskView;
 		mResultTextView = resultView;
 		mRandom = new Random();
-		mCallback = finishCallback;
+		mListener = listener;
+	}
+
+	protected void changeViewColor(TextView view, int resColor) {
+		view.setBackgroundColor(mContext.getResources().getColor(resColor));
+	}
+
+	protected void changeViewText(TextView view, String text) {
+		view.setText(text);
 	}
 
 	protected int nextRandom() {
@@ -30,8 +38,6 @@ public abstract class CommonMode extends IMode {
 	protected boolean nextBoolean() {
 		return mRandom.nextBoolean();
 	}
-
-	
 
 	public abstract void gameOver();
 

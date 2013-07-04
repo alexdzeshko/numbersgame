@@ -14,9 +14,11 @@ import android.widget.TextView;
 
 import com.android.grsu.numbersgame.R;
 import com.android.grsu.numbersgame.callbacks.ActivityCallback;
-import com.android.grsu.numbersgame.callbacks.FinishCallback;
+import com.android.grsu.numbersgame.callbacks.OnFinishListener;
 import com.android.grsu.numbersgame.modes.GuessNumber;
+import com.android.grsu.numbersgame.modes.MultiplyOrDivide;
 import com.android.grsu.numbersgame.modes.RememberMore;
+import com.android.grsu.numbersgame.modes.SummOrSubtract;
 import com.android.grsu.numbersgame.modes.common.IMode;
 import com.android.grsu.numbersgame.sound.SoundManager;
 
@@ -28,14 +30,14 @@ public class GameFragment extends Fragment implements OnClickListener {
 	private TextView mTextViewTask, mTextViewResult;
 	private IMode mGameManager;
 	private ActivityCallback mActivityCallback;
-	private FinishCallback mFinishCallback;
+	private OnFinishListener mFinishCallback;
 	private SoundManager mSoundManager;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mMode = getArguments().getInt(MODE_NUMBER);
-		mFinishCallback = new FinishCallback() {
+		mFinishCallback = new OnFinishListener() {
 
 			@Override
 			public void finish() {
@@ -79,6 +81,16 @@ public class GameFragment extends Fragment implements OnClickListener {
 		case 1:
 			mGameManager = new RememberMore(getActivity(), mTextViewTask,
 					mTextViewResult, mFinishCallback);
+		case 2:
+			mGameManager = MultiplyOrDivide.getInstance(getActivity(),
+					mTextViewTask, mTextViewResult, mFinishCallback);
+		case 3:
+			mGameManager = SummOrSubtract.getInstance(getActivity(),
+					mTextViewTask, mTextViewResult, mFinishCallback);
+		case 4:
+			// mGameManager = ComeOnGues.getInstance(getActivity(),
+			// mTextViewTask,
+			// mTextViewResult, imageView, mFinishCallback);
 		default:
 			break;
 		}
@@ -123,9 +135,6 @@ public class GameFragment extends Fragment implements OnClickListener {
 		button7.setTag(7);
 		button8.setTag(8);
 		button9.setTag(9);
-
-
-
 
 		initMode();
 
