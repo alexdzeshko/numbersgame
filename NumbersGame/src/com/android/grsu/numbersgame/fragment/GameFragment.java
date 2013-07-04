@@ -113,6 +113,20 @@ public class GameFragment extends Fragment implements OnClickListener {
 		button9.setOnClickListener(this);
 		button0.setOnClickListener(this);
 
+		button0.setTag(0);
+		button1.setTag(1);
+		button2.setTag(2);
+		button3.setTag(3);
+		button4.setTag(4);
+		button5.setTag(5);
+		button6.setTag(6);
+		button7.setTag(7);
+		button8.setTag(8);
+		button9.setTag(9);
+
+
+
+
 		initMode();
 
 		return view;
@@ -120,8 +134,7 @@ public class GameFragment extends Fragment implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		mGameManager.buttonPressed(Integer.valueOf(((Button) v).getText()
-				.toString()));
+		mGameManager.buttonPressed((Integer) v.getTag());
 	}
 
 	@Override
