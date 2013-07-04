@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.android.grsu.numbersgame.callbacks.FinishCallback;
 
-public abstract class CommonMode implements IMode {
+public abstract class CommonMode extends IMode {
 
 	private Random mRandom;
 	protected Context mContext;
@@ -30,6 +30,8 @@ public abstract class CommonMode implements IMode {
 	protected boolean nextBoolean() {
 		return mRandom.nextBoolean();
 	}
+
+	
 
 	public abstract void gameOver();
 

@@ -1,9 +1,23 @@
 package com.android.grsu.numbersgame.modes.common;
 
-public interface IMode {
+import com.android.grsu.numbersgame.sound.SoundManager;
 
-	public void buttonPressed(int button);
+public abstract class IMode {
 
-	public void startNewGame();
+	private SoundManager mSoundManager;
+	public void setSoundManager(SoundManager manager) {
+		mSoundManager = manager;
+	}
+
+	public void playSignal(int id) {
+		if (mSoundManager != null) {
+			mSoundManager.playSignal(id);
+		} else
+			throw new IllegalStateException(
+					"SoundManager is not setted or setted to null");
+	}
+	
+	public abstract void buttonPressed(int button);
+	public abstract void startNewGame();
 
 }

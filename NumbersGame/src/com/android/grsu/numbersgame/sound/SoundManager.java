@@ -14,6 +14,8 @@ public class SoundManager {
 
 	public static final int MORE = R.raw.more;
 	public static final int LESS = R.raw.less;
+	public static final int WIN = R.raw.win;
+	public static final int LOSS = R.raw.loss;
 
 	public SoundManager(Context context, int id) {
 		mContext = context;

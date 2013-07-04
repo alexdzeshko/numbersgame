@@ -8,9 +8,8 @@ import com.android.grsu.numbersgame.BuildConfig;
 import com.android.grsu.numbersgame.R;
 import com.android.grsu.numbersgame.callbacks.FinishCallback;
 import com.android.grsu.numbersgame.modes.common.CommonMode;
-import com.android.grsu.numbersgame.modes.common.IMode;
 
-public class MultiplyOrDivide extends CommonMode implements IMode {
+public class MultiplyOrDivide extends CommonMode {
 
 	private static final String LOG_TAG = MultiplyOrDivide.class
 			.getSimpleName();

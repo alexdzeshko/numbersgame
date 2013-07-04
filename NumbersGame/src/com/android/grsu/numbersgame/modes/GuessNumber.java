@@ -12,7 +12,7 @@ import com.android.grsu.numbersgame.callbacks.FinishCallback;
 import com.android.grsu.numbersgame.modes.common.IMode;
 import com.android.grsu.numbersgame.sound.SoundManager;
 
-public class GuessNumber implements IMode {
+public class GuessNumber extends IMode {
 
 	private static final String LOG_TAG = GuessNumber.class.getSimpleName();
 
@@ -23,15 +23,13 @@ public class GuessNumber implements IMode {
 	private Random mRandom;
 	private TextView mTextView;
 	private FinishCallback mCallback;
-	private SoundManager mSoundManager;
 
 	public GuessNumber(Context context, TextView textView,
-			FinishCallback finishCallback, SoundManager soundManager) {
+			FinishCallback finishCallback) {
 		mContext = context;
 		mTextView = textView;
 		mRandom = new Random();
 		mCallback = finishCallback;
-		mSoundManager = soundManager;
 		changeRightNumber();
 	}
 
@@ -54,6 +52,7 @@ public class GuessNumber implements IMode {
 	public void gameOver() {
 		reset();
 		changeViewColor(R.color.red);
+		playSignal(SoundManager.LOSS);
 		mCallback.finish();
 	}
 
@@ -62,25 +61,30 @@ public class GuessNumber implements IMode {
 			changeViewText("This number does not exists in this game!");
 			gameOver();
 		}
+		Integer signal = null;
 		if (guessNumber > mRightNumber) {
 			mAttempts++;
-			mSoundManager.playSignal(SoundManager.LESS);
+			signal = SoundManager.LESS;
 			changeViewText("Less than " + guessNumber);
 		}
 		if (guessNumber < mRightNumber) {
 			mAttempts++;
-			mSoundManager.playSignal(SoundManager.MORE);
+			signal = SoundManager.MORE;
 			changeViewText("More than " + guessNumber);
 		}
 		if (guessNumber == mRightNumber) {
 			changeViewText("Congratulations! you guessed it.. Changing number");
 			changeViewColor(R.color.green);
+			playSignal(SoundManager.WIN);
 			reset();
 			mCallback.finish();
 			return;
 		}
 		if (mAttempts == 4) {
 			gameOver();
+		}
+		else if(signal != null){
+			playSignal(signal);
 		}
 	}
 

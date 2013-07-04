@@ -74,7 +74,7 @@ public class GameFragment extends Fragment implements OnClickListener {
 		switch (mMode) {
 		case 0:
 			mGameManager = new GuessNumber(getActivity(), mTextViewResult,
-					mFinishCallback, mSoundManager);
+					mFinishCallback);
 			break;
 		case 1:
 			mGameManager = new RememberMore(getActivity(), mTextViewTask,
@@ -82,7 +82,7 @@ public class GameFragment extends Fragment implements OnClickListener {
 		default:
 			break;
 		}
-
+		mGameManager.setSoundManager(mSoundManager);
 		mGameManager.startNewGame();
 	}
 
