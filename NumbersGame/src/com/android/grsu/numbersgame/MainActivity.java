@@ -39,7 +39,7 @@ public class MainActivity extends FragmentActivity implements ActivityCallback {
 				R.layout.adapter_drawer, mModeTitles));
 		// Set the list's click listener
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-		selectItem(0);
+		//selectItem(0);
 		mDrawerLayout.openDrawer(mDrawerList);
 		mSoundManager = new SoundManager(this, R.raw.fon);
 	}

@@ -19,7 +19,6 @@ public abstract class CommonMode {
 	protected boolean isPlaying;
 
 	private int mScore;
-	private int mTime = 10;
 
 	private CountDownTimer timer;
 
@@ -41,22 +40,16 @@ public abstract class CommonMode {
 		return ++mScore;
 	}
 
-	public abstract void theTimeHasEnded();
-
+	public boolean highScore(){
+		return mScore >= 10;
+	}
 	public void timerStart() {
-
 		timer.start();
-
 	}
 
 	public void timerStop() {
-
 		timer.cancel();
 	}
-
-	public abstract void buttonPressed(int button);
-
-	public abstract void startNewGame();
 
 	protected CommonMode(Context context, TextView taskView,
 			TextView resultView, TextView timerT, OnFinishListener listener) {
@@ -100,9 +93,20 @@ public abstract class CommonMode {
 	}
 
 	public void gameOver() {
+		reset();
 		playSignal(SoundManager.LOSS);
 	}
 
-	public abstract void reset();
+	public abstract void buttonPressed(int button);
+	
+	public abstract void theTimeHasEnded();
+	
+	public abstract void startNewGame();
+
+	public void reset(){
+		mScore = 0;
+		timer.cancel();
+	}
 
 }
+

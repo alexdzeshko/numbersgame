@@ -19,12 +19,11 @@ public class GuessNumber extends CommonMode {
 			TextView mTextViewTimer, OnFinishListener listener) {
 		super(context, taskView, resultView, mTextViewTimer, listener);
 		changeRightNumber();
-		startNewGame();
 	}
 
 	@Override
 	public void gameOver() {
-
+		super.gameOver();
 		changeViewColor(R.color.red);
 		mListener.finish();
 	}
@@ -38,11 +37,15 @@ public class GuessNumber extends CommonMode {
 		if (guessNumber > mRightNumber) {
 			mAttempts++;
 			signal = SoundManager.LESS;
+			timerStop();
+			timerStart();
 			changeViewText("Less than " + guessNumber);
 		}
 		if (guessNumber < mRightNumber) {
 			mAttempts++;
 			signal = SoundManager.MORE;
+			timerStop();
+			timerStart();
 			changeViewText("More than " + guessNumber);
 		}
 		if (guessNumber == mRightNumber) {
@@ -50,7 +53,13 @@ public class GuessNumber extends CommonMode {
 			changeViewColor(R.color.green);
 			playSignal(SoundManager.WIN);
 			reset();
-			mListener.finish();
+			timerStop();
+			// mListener.finish();
+			if (!highScore()) {
+				scorePlus();
+				startNewGame();
+			} else
+				mListener.finish();
 			return;
 		}
 		if (mAttempts == 4) {
@@ -75,7 +84,6 @@ public class GuessNumber extends CommonMode {
 
 	@Override
 	public void buttonPressed(int button) {
-		timerStart();
 		makeGuess(button);
 		if (BuildConfig.DEBUG) {
 			Log.d(LOG_TAG, "buttonPressed: " + button);
@@ -98,7 +106,7 @@ public class GuessNumber extends CommonMode {
 
 	@Override
 	public void reset() {
-		timerStop();
+		super.reset();
 		changeRightNumber();
 		mAttempts = 0;
 		mResultTextView.setText("");

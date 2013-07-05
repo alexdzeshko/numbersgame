@@ -27,7 +27,7 @@ public class SoundManager {
 		if (mPlayer == null) {
 			mPlayer = MediaPlayer.create(mContext, mMusicId);
 			mPlayer.setLooping(true);
-			mPlayer.setVolume(0, (float) 0.5);
+			mPlayer.setVolume(0, (float) 0.1);
 		}
 		mPlayer.start();
 	}
