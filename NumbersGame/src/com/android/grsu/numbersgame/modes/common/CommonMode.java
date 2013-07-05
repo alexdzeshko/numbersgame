@@ -3,25 +3,84 @@ package com.android.grsu.numbersgame.modes.common;
 import java.util.Random;
 
 import android.content.Context;
+import android.os.CountDownTimer;
+import android.text.format.Time;
 import android.widget.TextView;
 
 import com.android.grsu.numbersgame.callbacks.OnFinishListener;
 import com.android.grsu.numbersgame.sound.SoundManager;
 
-public abstract class CommonMode extends IMode {
+public abstract class CommonMode {
 
 	private Random mRandom;
 	protected Context mContext;
 	protected OnFinishListener mListener;
-	protected TextView mTaskTextView, mResultTextView;
+	protected TextView mTaskTextView, mResultTextView, mTextViewTimer;
+	protected boolean isPlaying;
+
+	private int mScore;
+	private int mTime = 10;
+
+	private CountDownTimer timer;
+
+	private SoundManager mSoundManager;
+
+	public void setSoundManager(SoundManager manager) {
+		mSoundManager = manager;
+	}
+
+	public void playSignal(int id) {
+		if (mSoundManager != null) {
+			mSoundManager.playSignal(id);
+		} else
+			throw new IllegalStateException(
+					"SoundManager is not setted or setted to null");
+	}
+
+	public int scorePlus() {
+		return ++mScore;
+	}
+
+	public abstract void theTimeHasEnded();
+
+	public void timerStart() {
+
+		timer.start();
+
+	}
+
+	public void timerStop() {
+
+		timer.cancel();
+	}
+
+	public abstract void buttonPressed(int button);
+
+	public abstract void startNewGame();
 
 	protected CommonMode(Context context, TextView taskView,
-			TextView resultView, OnFinishListener listener) {
+			TextView resultView, TextView timerT, OnFinishListener listener) {
 		mContext = context;
 		mTaskTextView = taskView;
 		mResultTextView = resultView;
+		mTextViewTimer = timerT;
 		mRandom = new Random();
 		mListener = listener;
+		timer = new CountDownTimer(10000, 1000) {
+
+			@Override
+			public void onTick(long millisUntilFinished) {
+				
+				mTextViewTimer.setText(String.valueOf(millisUntilFinished/1000));
+
+			}
+
+			@Override
+			public void onFinish() {
+				theTimeHasEnded();
+
+			}
+		};
 	}
 
 	protected void changeViewColor(TextView view, int resColor) {
@@ -40,7 +99,7 @@ public abstract class CommonMode extends IMode {
 		return mRandom.nextBoolean();
 	}
 
-	public void gameOver(){
+	public void gameOver() {
 		playSignal(SoundManager.LOSS);
 	}
 

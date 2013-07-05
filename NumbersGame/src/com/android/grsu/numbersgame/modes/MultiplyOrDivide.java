@@ -22,8 +22,8 @@ public class MultiplyOrDivide extends CommonMode {
 	private boolean mOperation;
 
 	public MultiplyOrDivide(Context context, TextView taskTextView,
-			TextView resultTextView, OnFinishListener finishCallback) {
-		super(context, taskTextView, resultTextView, finishCallback);
+			TextView resultTextView, TextView mTextViewTimer, OnFinishListener finishCallback) {
+		super(context, taskTextView, resultTextView, mTextViewTimer, finishCallback);
 	}
 
 	private void makeGuess(int button) {
@@ -129,6 +129,12 @@ public class MultiplyOrDivide extends CommonMode {
 		changeViewText(mTaskTextView, "");
 		changeViewText(mResultTextView, "");
 		changeViewColor(mResultTextView, R.color.white);
+	}
+
+	@Override
+	public void theTimeHasEnded() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

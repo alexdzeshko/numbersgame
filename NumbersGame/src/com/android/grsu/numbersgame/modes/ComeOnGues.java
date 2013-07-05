@@ -27,7 +27,7 @@ public class ComeOnGues extends CommonMode {
 	@SuppressLint("UseSparseArrays")
 	public ComeOnGues(Context context, TextView taskView, TextView resultView,
 			OnFinishListener listener) {
-		super(context, taskView, resultView, listener);
+		super(context, taskView, resultView, taskView, listener);
 		mResources = mContext.getResources();
 		mDrawables = new HashMap<Integer, Drawable>();
 		mAnimals = new HashMap<Integer, String>();
@@ -109,5 +109,11 @@ public class ComeOnGues extends CommonMode {
 	public void startNewGame() {
 		reset();
 		prepareTask();
+	}
+
+	@Override
+	public void theTimeHasEnded() {
+		// TODO Auto-generated method stub
+		
 	}
 }

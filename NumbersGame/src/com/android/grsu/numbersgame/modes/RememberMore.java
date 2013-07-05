@@ -13,8 +13,8 @@ import com.android.grsu.numbersgame.modes.common.CommonMode;
 public class RememberMore extends CommonMode {
 
 	public RememberMore(Context context, TextView tastView,
-			TextView resultView, OnFinishListener finishCallback) {
-		super(context, tastView, resultView, finishCallback);
+			TextView resultView, TextView mTextViewTimer, OnFinishListener finishCallback) {
+		super(context, tastView, resultView, mTextViewTimer, finishCallback);
 	}
 
 	private Queue<Integer> mQueueNew, mQueueOld;
@@ -72,6 +72,12 @@ public class RememberMore extends CommonMode {
 		int next = nextRandom();
 		mQueueNew.add(next);
 		mResultTextView.setText("Next number is " + next);
+	}
+
+	@Override
+	public void theTimeHasEnded() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

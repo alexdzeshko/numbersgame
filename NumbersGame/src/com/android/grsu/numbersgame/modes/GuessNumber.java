@@ -1,7 +1,5 @@
 package com.android.grsu.numbersgame.modes;
 
-import java.util.Random;
-
 import android.content.Context;
 import android.util.Log;
 import android.widget.TextView;
@@ -9,32 +7,26 @@ import android.widget.TextView;
 import com.android.grsu.numbersgame.BuildConfig;
 import com.android.grsu.numbersgame.R;
 import com.android.grsu.numbersgame.callbacks.OnFinishListener;
-import com.android.grsu.numbersgame.modes.common.IMode;
+import com.android.grsu.numbersgame.modes.common.CommonMode;
 import com.android.grsu.numbersgame.sound.SoundManager;
 
-public class GuessNumber extends IMode {
+public class GuessNumber extends CommonMode {
 
 	private static final String LOG_TAG = GuessNumber.class.getSimpleName();
 	private int mRightNumber, mAttempts;
-	private Context mContext;
-	private Random mRandom;
-	private TextView mResultTextView, mTaskTextView;
-	private OnFinishListener mCallback;
 
-	public GuessNumber(Context context, TextView taskTextView,
-			TextView resultTextView, OnFinishListener finishCallback) {
-		mContext = context;
-		mResultTextView = resultTextView;
-		mTaskTextView = taskTextView;
-		mRandom = new Random();
-		mCallback = finishCallback;
+	public GuessNumber(Context context, TextView taskView, TextView resultView,
+			TextView mTextViewTimer, OnFinishListener listener) {
+		super(context, taskView, resultView, mTextViewTimer, listener);
 		changeRightNumber();
+		startNewGame();
 	}
 
+	@Override
 	public void gameOver() {
+
 		changeViewColor(R.color.red);
-		playSignal(SoundManager.LOSS);
-		mCallback.finish();
+		mListener.finish();
 	}
 
 	public void makeGuess(int guessNumber) {
@@ -58,7 +50,7 @@ public class GuessNumber extends IMode {
 			changeViewColor(R.color.green);
 			playSignal(SoundManager.WIN);
 			reset();
-			mCallback.finish();
+			mListener.finish();
 			return;
 		}
 		if (mAttempts == 4) {
@@ -68,14 +60,8 @@ public class GuessNumber extends IMode {
 		}
 	}
 
-	private void reset() {
-		changeRightNumber();
-		mAttempts = 0;
-		mResultTextView.setText("");
-	}
-
 	private void changeRightNumber() {
-		mRightNumber = mRandom.nextInt(9);
+		mRightNumber = nextRandom();
 	}
 
 	private void changeViewColor(int resColor) {
@@ -89,6 +75,7 @@ public class GuessNumber extends IMode {
 
 	@Override
 	public void buttonPressed(int button) {
+		timerStart();
 		makeGuess(button);
 		if (BuildConfig.DEBUG) {
 			Log.d(LOG_TAG, "buttonPressed: " + button);
@@ -100,7 +87,21 @@ public class GuessNumber extends IMode {
 		reset();
 		mTaskTextView.setText("Guess Number");
 		changeViewColor(R.color.white);
+		timerStart();
+	}
 
+	@Override
+	public void theTimeHasEnded() {
+		gameOver();
+
+	}
+
+	@Override
+	public void reset() {
+		timerStop();
+		changeRightNumber();
+		mAttempts = 0;
+		mResultTextView.setText("");
 	}
 
 }

@@ -21,8 +21,8 @@ public class SummOrSubtract extends CommonMode {
 	private boolean mOperation;
 
 	public SummOrSubtract(Context context, TextView tastView,
-			TextView resultView, OnFinishListener finishCallback) {
-		super(context, tastView, resultView, finishCallback);
+			TextView resultView, TextView mTextViewTimer, OnFinishListener finishCallback) {
+		super(context, tastView, resultView, mTextViewTimer, finishCallback);
 	}
 
 	private void makeGuess(int button) {
@@ -128,6 +128,12 @@ public class SummOrSubtract extends CommonMode {
 		changeViewText(mTaskTextView, "");
 		changeViewText(mResultTextView, "");
 		changeViewColor(mResultTextView, R.color.white);
+	}
+
+	@Override
+	public void theTimeHasEnded() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

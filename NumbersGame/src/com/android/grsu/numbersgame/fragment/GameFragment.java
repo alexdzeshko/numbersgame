@@ -27,7 +27,7 @@ import com.android.grsu.numbersgame.modes.GuessNumber;
 import com.android.grsu.numbersgame.modes.MultiplyOrDivide;
 import com.android.grsu.numbersgame.modes.RememberMore;
 import com.android.grsu.numbersgame.modes.SummOrSubtract;
-import com.android.grsu.numbersgame.modes.common.IMode;
+import com.android.grsu.numbersgame.modes.common.CommonMode;
 import com.android.grsu.numbersgame.sound.SoundManager;
 
 public class GameFragment extends Fragment implements OnClickListener {
@@ -36,8 +36,8 @@ public class GameFragment extends Fragment implements OnClickListener {
 	public static final String MODE = "MODE";
 
 	private int mMode;
-	private TextView mTextViewTask, mTextViewResult;
-	private IMode mGameManager;
+	private TextView mTextViewTask, mTextViewResult, mTextViewTimer;
+	private CommonMode mGameManager;
 	private ActivityCallback mActivityCallback;
 	private OnFinishListener mFinishCallback;
 	private SoundManager mSoundManager;
@@ -52,9 +52,8 @@ public class GameFragment extends Fragment implements OnClickListener {
 
 			@Override
 			public void finish() {
-				Context c = ContextHolder.getContext();
 				AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(
-						getActivity());
+						ContextHolder.getContext());
 				dialogBuilder
 						.setMessage("New game?")
 						.setPositiveButton("Yes",
@@ -82,6 +81,7 @@ public class GameFragment extends Fragment implements OnClickListener {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	private void randomize() {
 		if (mHardMode) {
 			Random r = new Random();
@@ -103,19 +103,19 @@ public class GameFragment extends Fragment implements OnClickListener {
 		switch (mMode) {
 		case 0:
 			mGameManager = new GuessNumber(getActivity(), mTextViewTask,
-					mTextViewResult, mFinishCallback);
+					mTextViewResult, mTextViewTimer, mFinishCallback);
 			break;
 		case 1:
 			mGameManager = new RememberMore(getActivity(), mTextViewTask,
-					mTextViewResult, mFinishCallback);
+					mTextViewResult, mTextViewTimer, mFinishCallback);
 			break;
 		case 2:
 			mGameManager = new MultiplyOrDivide(getActivity(), mTextViewTask,
-					mTextViewResult, mFinishCallback);
+					mTextViewResult, mTextViewTimer, mFinishCallback);
 			break;
 		case 3:
 			mGameManager = new SummOrSubtract(getActivity(), mTextViewTask,
-					mTextViewResult, mFinishCallback);
+					mTextViewResult, mTextViewTimer, mFinishCallback);
 			break;
 		case 4:
 			mGameManager = new ComeOnGues(getActivity(), mTextViewTask,
@@ -134,6 +134,7 @@ public class GameFragment extends Fragment implements OnClickListener {
 		View view = inflater.inflate(R.layout.fragment_game, null);
 		mTextViewTask = (TextView) view.findViewById(R.id.text_view_task);
 		mTextViewResult = (TextView) view.findViewById(R.id.text_view_results);
+		mTextViewTimer = (TextView) view.findViewById(R.id.timer);
 		mButtons[1] = (Button) view.findViewById(R.id.button1);
 		mButtons[2] = (Button) view.findViewById(R.id.button2);
 		mButtons[3] = (Button) view.findViewById(R.id.button3);
