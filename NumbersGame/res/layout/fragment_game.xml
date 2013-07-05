@@ -4,11 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
+    <!-- <TextView
         style="@style/styleText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/task" />
+        android:text="@string/task" /> -->
 
     <TextView
         android:id="@+id/text_view_task"

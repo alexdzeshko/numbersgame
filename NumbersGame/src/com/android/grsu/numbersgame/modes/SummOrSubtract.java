@@ -17,7 +17,6 @@ public class SummOrSubtract extends CommonMode {
 	private int mSecondArithmeticMember;
 	private int mRightAnswer;
 	private int mCounter;
-	private String mRightAnswerString;
 	private boolean mOperation;
 
 	private static SummOrSubtract instance;
@@ -38,20 +37,31 @@ public class SummOrSubtract extends CommonMode {
 	}
 
 	private void makeGuess(int button) {
-		int currentNumber = Integer
-				.valueOf(mRightAnswerString.charAt(mCounter));
-		if (currentNumber == button) {
-			resumeOrFinish();
+		if (mRightAnswer < 10) {
+			if (mRightAnswer == button) {
+				finish();
+			} else {
+				gameOver();
+			}
 		} else {
-			gameOver();
-		}
-	}
-
-	private void resumeOrFinish() {
-		if (mCounter == mRightAnswerString.length() - 1) {
-			finish();
-		} else {
-			resume();
+			if (mCounter == 0) {
+				if (mRightAnswer / 10 == button) {
+					resume();
+					return;
+				} else {
+					gameOver();
+					return;
+				}
+			}
+			if (mCounter == 1) {
+				if (mRightAnswer % 10 == button) {
+					finish();
+					return;
+				} else {
+					gameOver();
+					return;
+				}
+			}
 		}
 	}
 
@@ -79,10 +89,11 @@ public class SummOrSubtract extends CommonMode {
 			if (mFirstArithmeticMember > mSecondArithmeticMember) {
 				mRightAnswer = mFirstArithmeticMember - mSecondArithmeticMember;
 			} else {
-				mRightAnswer = mSecondArithmeticMember - mFirstArithmeticMember;
+				mSecondArithmeticMember = mSecondArithmeticMember
+						- mFirstArithmeticMember;
+				mRightAnswer = mFirstArithmeticMember - mSecondArithmeticMember;
 			}
 		}
-		mRightAnswerString = String.valueOf(mRightAnswer);
 	}
 
 	private void prepareTaskString() {

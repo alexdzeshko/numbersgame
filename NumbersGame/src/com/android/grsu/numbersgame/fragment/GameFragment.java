@@ -22,7 +22,8 @@ import com.android.grsu.numbersgame.modes.SummOrSubtract;
 import com.android.grsu.numbersgame.modes.common.IMode;
 import com.android.grsu.numbersgame.sound.SoundManager;
 
-public class GameFragment extends Fragment implements OnClickListener {
+public class GameFragment extends Fragment implements OnClickListener,
+		OnFinishListener {
 
 	public static final String MODE_NUMBER = "MODE_NUM";
 
@@ -30,63 +31,41 @@ public class GameFragment extends Fragment implements OnClickListener {
 	private TextView mTextViewTask, mTextViewResult;
 	private IMode mGameManager;
 	private ActivityCallback mActivityCallback;
-	private OnFinishListener mFinishCallback;
+	// private OnFinishListener mFinishCallback;
 	private SoundManager mSoundManager;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mMode = getArguments().getInt(MODE_NUMBER);
-		mFinishCallback = new OnFinishListener() {
-
-			@Override
-			public void finish() {
-				mGameManager.startNewGame();
-				AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(
-						getActivity());
-				dialogBuilder
-						.setMessage("New game?")
-						.setPositiveButton("Yes",
-								new DialogInterface.OnClickListener() {
-
-									@Override
-									public void onClick(DialogInterface dialog,
-											int which) {
-
-									};
-
-								})
-						.setNegativeButton("No",
-								new DialogInterface.OnClickListener() {
-
-									@Override
-									public void onClick(DialogInterface dialog,
-											int which) {
-										mActivityCallback.openDrawer(true);
-
-									}
-								}).show();
-
-			}
-		};
+		// mFinishCallback = new OnFinishListener() {
+		//
+		// @Override
+		// public void finish() {
+		//
+		// }
+		// };
 
 	}
 
 	private void initMode() {
 		switch (mMode) {
 		case 0:
-			mGameManager = new GuessNumber(getActivity(), mTextViewResult,
-					mFinishCallback);
+			mGameManager = GuessNumber.getInstance(getActivity(),
+					mTextViewResult, this);
 			break;
 		case 1:
 			mGameManager = new RememberMore(getActivity(), mTextViewTask,
-					mTextViewResult, mFinishCallback);
+					mTextViewResult, this);
+			break;
 		case 2:
 			mGameManager = MultiplyOrDivide.getInstance(getActivity(),
-					mTextViewTask, mTextViewResult, mFinishCallback);
+					mTextViewTask, mTextViewResult, this);
+			break;
 		case 3:
 			mGameManager = SummOrSubtract.getInstance(getActivity(),
-					mTextViewTask, mTextViewResult, mFinishCallback);
+					mTextViewTask, mTextViewResult, this);
+			break;
 		case 4:
 			// mGameManager = ComeOnGues.getInstance(getActivity(),
 			// mTextViewTask,
@@ -154,6 +133,32 @@ public class GameFragment extends Fragment implements OnClickListener {
 		mActivityCallback = (ActivityCallback) activity;
 		mSoundManager = mActivityCallback.getSoundManager();
 		super.onAttach(activity);
+	}
+
+	@Override
+	public void finish() {
+		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(
+				getActivity());
+		dialogBuilder
+				.setMessage("New game?")
+				.setPositiveButton("Yes",
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								mGameManager.startNewGame();
+							};
+
+						})
+				.setNegativeButton("No", new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						mActivityCallback.openDrawer(true);
+					}
+				}).show();
+
 	}
 
 }

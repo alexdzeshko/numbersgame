@@ -22,13 +22,23 @@ public class GuessNumber extends IMode {
 	private TextView mTextView;
 	private OnFinishListener mCallback;
 
-	public GuessNumber(Context context, TextView textView,
+	private static GuessNumber instance;
+
+	private GuessNumber(Context context, TextView textView,
 			OnFinishListener finishCallback) {
 		mContext = context;
 		mTextView = textView;
 		mRandom = new Random();
 		mCallback = finishCallback;
 		changeRightNumber();
+	}
+
+	public static GuessNumber getInstance(Context context, TextView textView,
+			OnFinishListener finishCallback) {
+		if (instance == null) {
+			instance = new GuessNumber(context, textView, finishCallback);
+		}
+		return instance;
 	}
 
 	public void gameOver() {
