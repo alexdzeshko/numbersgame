@@ -23,11 +23,12 @@ public class MainActivity extends FragmentActivity implements ActivityCallback {
 	private CharSequence mTitle;
 	private DrawerLayout mDrawerLayout;
 	private SoundManager mSoundManager;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
+		ContextHolder.setContext(this);
 		mModeTitles = getResources().getStringArray(R.array.modes_array);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -40,16 +41,19 @@ public class MainActivity extends FragmentActivity implements ActivityCallback {
 		mDrawerLayout.openDrawer(mDrawerList);
 		mSoundManager = new SoundManager(this, R.raw.fon);
 	}
+
 	@Override
-	public void onResume(){
+	public void onResume() {
 		super.onResume();
 		mSoundManager.playBackgroundMusic();
 	}
+
 	@Override
-	public void onPause(){
+	public void onPause() {
 		super.onPause();
 		mSoundManager.pauseBackgroundMusic();
 	}
+
 	@Override
 	public void onStop() {
 		super.onStop();
@@ -107,6 +111,7 @@ public class MainActivity extends FragmentActivity implements ActivityCallback {
 			mDrawerLayout.closeDrawer(mDrawerList);
 
 	}
+
 	@Override
 	public SoundManager getSoundManager() {
 		return mSoundManager;

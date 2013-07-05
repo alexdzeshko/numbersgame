@@ -89,6 +89,9 @@ public class SummOrSubtract extends CommonMode {
 			if (mFirstArithmeticMember > mSecondArithmeticMember) {
 				mRightAnswer = mFirstArithmeticMember - mSecondArithmeticMember;
 			} else {
+				if (mSecondArithmeticMember == 0) {
+					mSecondArithmeticMember++;
+				}
 				mSecondArithmeticMember = mSecondArithmeticMember
 						- mFirstArithmeticMember;
 				mRightAnswer = mFirstArithmeticMember - mSecondArithmeticMember;
@@ -126,7 +129,6 @@ public class SummOrSubtract extends CommonMode {
 	@Override
 	public void gameOver() {
 		super.gameOver();
-		reset();
 		changeViewColor(mResultTextView, R.color.red);
 		mListener.finish();
 	}
@@ -134,6 +136,9 @@ public class SummOrSubtract extends CommonMode {
 	@Override
 	public void reset() {
 		mCounter = 0;
+		changeViewText(mTaskTextView, "");
+		changeViewText(mResultTextView, "");
+		changeViewColor(mResultTextView, R.color.white);
 	}
 
 }

@@ -90,8 +90,7 @@ public class ComeOnGues extends CommonMode {
 		mTaskNumber = -1;
 		changeViewText(mTaskTextView, "");
 		changeViewText(mResultTextView, "");
-		changeViewColor(mResultTextView, mResources.getColor(R.color.white));
-		changeViewColor(mTaskTextView, mResources.getColor(R.color.white));
+		changeViewColor(mResultTextView, R.color.white);
 	}
 
 	@Override

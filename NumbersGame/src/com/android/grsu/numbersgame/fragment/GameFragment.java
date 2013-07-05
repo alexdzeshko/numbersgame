@@ -2,6 +2,7 @@ package com.android.grsu.numbersgame.fragment;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.grsu.numbersgame.ContextHolder;
 import com.android.grsu.numbersgame.R;
 import com.android.grsu.numbersgame.callbacks.ActivityCallback;
 import com.android.grsu.numbersgame.callbacks.OnFinishListener;
@@ -22,8 +24,7 @@ import com.android.grsu.numbersgame.modes.SummOrSubtract;
 import com.android.grsu.numbersgame.modes.common.IMode;
 import com.android.grsu.numbersgame.sound.SoundManager;
 
-public class GameFragment extends Fragment implements OnClickListener,
-		OnFinishListener {
+public class GameFragment extends Fragment implements OnClickListener {
 
 	public static final String MODE_NUMBER = "MODE_NUM";
 
@@ -31,20 +32,42 @@ public class GameFragment extends Fragment implements OnClickListener,
 	private TextView mTextViewTask, mTextViewResult;
 	private IMode mGameManager;
 	private ActivityCallback mActivityCallback;
-	// private OnFinishListener mFinishCallback;
+	private OnFinishListener mFinishCallback;
 	private SoundManager mSoundManager;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mMode = getArguments().getInt(MODE_NUMBER);
-		// mFinishCallback = new OnFinishListener() {
-		//
-		// @Override
-		// public void finish() {
-		//
-		// }
-		// };
+		mFinishCallback = new OnFinishListener() {
+
+			@Override
+			public void finish() {
+				Context c = ContextHolder.getContext();
+				AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(c);
+				dialogBuilder
+						.setMessage("New game?")
+						.setPositiveButton("Yes",
+								new DialogInterface.OnClickListener() {
+
+									@Override
+									public void onClick(DialogInterface dialog,
+											int which) {
+										mGameManager.startNewGame();
+									};
+
+								})
+						.setNegativeButton("No",
+								new DialogInterface.OnClickListener() {
+
+									@Override
+									public void onClick(DialogInterface dialog,
+											int which) {
+										mActivityCallback.openDrawer(true);
+									}
+								}).show();
+			}
+		};
 
 	}
 
@@ -52,19 +75,19 @@ public class GameFragment extends Fragment implements OnClickListener,
 		switch (mMode) {
 		case 0:
 			mGameManager = GuessNumber.getInstance(getActivity(),
-					mTextViewResult, this);
+					mTextViewResult, mFinishCallback);
 			break;
 		case 1:
 			mGameManager = new RememberMore(getActivity(), mTextViewTask,
-					mTextViewResult, this);
+					mTextViewResult, mFinishCallback);
 			break;
 		case 2:
 			mGameManager = MultiplyOrDivide.getInstance(getActivity(),
-					mTextViewTask, mTextViewResult, this);
+					mTextViewTask, mTextViewResult, mFinishCallback);
 			break;
 		case 3:
 			mGameManager = SummOrSubtract.getInstance(getActivity(),
-					mTextViewTask, mTextViewResult, this);
+					mTextViewTask, mTextViewResult, mFinishCallback);
 			break;
 		case 4:
 			// mGameManager = ComeOnGues.getInstance(getActivity(),
@@ -133,32 +156,6 @@ public class GameFragment extends Fragment implements OnClickListener,
 		mActivityCallback = (ActivityCallback) activity;
 		mSoundManager = mActivityCallback.getSoundManager();
 		super.onAttach(activity);
-	}
-
-	@Override
-	public void finish() {
-		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(
-				getActivity());
-		dialogBuilder
-				.setMessage("New game?")
-				.setPositiveButton("Yes",
-						new DialogInterface.OnClickListener() {
-
-							@Override
-							public void onClick(DialogInterface dialog,
-									int which) {
-								mGameManager.startNewGame();
-							};
-
-						})
-				.setNegativeButton("No", new DialogInterface.OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						mActivityCallback.openDrawer(true);
-					}
-				}).show();
-
 	}
 
 }
