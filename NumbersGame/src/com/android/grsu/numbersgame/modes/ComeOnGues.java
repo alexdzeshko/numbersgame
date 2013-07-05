@@ -26,8 +26,9 @@ public class ComeOnGues extends CommonMode {
 
 	@SuppressLint("UseSparseArrays")
 	public ComeOnGues(Context context, TextView taskView, TextView resultView,
-			TextView mTextViewTimer, TextView mTextViewScore, OnFinishListener listener) {
-		super(context, taskView, resultView, taskView, mTextViewScore, listener);
+			TextView mTextViewTimer, TextView mTextViewScore,
+			OnFinishListener listener) {
+		super(context, taskView, resultView, mTextViewTimer, mTextViewScore, listener);
 		mResources = mContext.getResources();
 		mDrawables = new HashMap<Integer, Drawable>();
 		mAnimals = new HashMap<Integer, String>();
@@ -63,11 +64,17 @@ public class ComeOnGues extends CommonMode {
 
 	private void makeGuess(int buttonPressed) {
 		if (buttonPressed == mTaskNumber) {
-			changeViewColor(mResultTextView, R.color.green);
-			changeViewText(mResultTextView,
-					"Congratulations! you guessed it.. Changing task");
-			playSignal(SoundManager.WIN);
-			mListener.finish();
+			scorePlus();
+			if (!highScore()) {
+				prolongate();
+			} else {
+				timerStop();
+				changeViewColor(mResultTextView, R.color.green);
+				changeViewText(mResultTextView,
+						"Congratulations!");
+				playSignal(SoundManager.WIN);
+				mListener.finish(mScore);
+			}
 		} else {
 			gameOver();
 		}
@@ -89,11 +96,13 @@ public class ComeOnGues extends CommonMode {
 		super.gameOver();
 		changeViewColor(mResultTextView, R.color.red);
 		changeViewText(mResultTextView, "You Lose");
-		mListener.finish();
+		mListener.finish(mScore);
 	}
 
 	@Override
 	public void reset() {
+		resetScore();
+		timerStop();
 		mTaskNumber = -1;
 		changeViewText(mTaskTextView, "");
 		changeViewText(mResultTextView, "");
@@ -109,11 +118,20 @@ public class ComeOnGues extends CommonMode {
 	public void startNewGame() {
 		reset();
 		prepareTask();
+		timerStart();
 	}
 
 	@Override
 	public void theTimeHasEnded() {
-		// TODO Auto-generated method stub
-		
+		gameOver();
+
+	}
+
+	@Override
+	public void prolongate() {
+		timerStop();
+		prepareTask();
+		timerStart();
+
 	}
 }

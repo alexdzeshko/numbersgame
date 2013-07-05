@@ -26,7 +26,7 @@ public class GuessNumber extends CommonMode {
 	public void gameOver() {
 		super.gameOver();
 		changeViewColor(R.color.red);
-		mListener.finish();
+		mListener.finish(mScore);
 	}
 
 	public void makeGuess(int guessNumber) {
@@ -65,7 +65,7 @@ public class GuessNumber extends CommonMode {
 					@Override
 					public void run() {
 						// TODO Auto-generated method stub
-						mListener.finish();
+						mListener.finish(mScore);
 						
 					}
 				}, 1000);
@@ -122,11 +122,13 @@ public class GuessNumber extends CommonMode {
 		mResultTextView.setText("");
 	}
 
+	@Override
 	public void prolongate(){
 		timerStop();
 		timerStart();
 		changeRightNumber();
 		mAttempts = 0;
 		mResultTextView.setText("");
+		changeViewColor(R.color.white);
 	}
 }

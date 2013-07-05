@@ -2,6 +2,6 @@ package com.android.grsu.numbersgame.callbacks;
 
 public interface OnFinishListener {
 
-	void finish();
+	void finish(int score);
 
 }

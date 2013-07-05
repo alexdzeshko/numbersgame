@@ -36,7 +36,8 @@ public class GameFragment extends Fragment implements OnClickListener {
 	public static final String MODE = "MODE";
 
 	private int mMode;
-	private TextView mTextViewTask, mTextViewResult, mTextViewTimer, mTextViewScore;
+	private TextView mTextViewTask, mTextViewResult, mTextViewTimer,
+			mTextViewScore;
 	private CommonMode mGameManager;
 	private ActivityCallback mActivityCallback;
 	private OnFinishListener mFinishCallback;
@@ -51,11 +52,11 @@ public class GameFragment extends Fragment implements OnClickListener {
 		mFinishCallback = new OnFinishListener() {
 
 			@Override
-			public void finish() {
+			public void finish(int score) {
 				AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(
 						ContextHolder.getContext());
 				dialogBuilder
-						.setMessage("New game?")
+						.setMessage("Your score is " + score + "!\n New game?")
 						.setPositiveButton("Yes",
 								new DialogInterface.OnClickListener() {
 
@@ -103,23 +104,28 @@ public class GameFragment extends Fragment implements OnClickListener {
 		switch (mMode) {
 		case 0:
 			mGameManager = new GuessNumber(getActivity(), mTextViewTask,
-					mTextViewResult, mTextViewTimer, mTextViewScore, mFinishCallback);
+					mTextViewResult, mTextViewTimer, mTextViewScore,
+					mFinishCallback);
 			break;
 		case 1:
 			mGameManager = new RememberMore(getActivity(), mTextViewTask,
-					mTextViewResult, mTextViewTimer, mTextViewScore, mFinishCallback);
+					mTextViewResult, mTextViewTimer, mTextViewScore,
+					mFinishCallback);
 			break;
 		case 2:
 			mGameManager = new MultiplyOrDivide(getActivity(), mTextViewTask,
-					mTextViewResult, mTextViewTimer, mTextViewScore, mFinishCallback);
+					mTextViewResult, mTextViewTimer, mTextViewScore,
+					mFinishCallback);
 			break;
 		case 3:
 			mGameManager = new SummOrSubtract(getActivity(), mTextViewTask,
-					mTextViewResult, mTextViewTimer, mTextViewScore, mFinishCallback);
+					mTextViewResult, mTextViewTimer, mTextViewScore,
+					mFinishCallback);
 			break;
 		case 4:
 			mGameManager = new ComeOnGues(getActivity(), mTextViewTask,
-					mTextViewResult, mTextViewTimer, mTextViewScore, mFinishCallback);
+					mTextViewResult, mTextViewTimer, mTextViewScore,
+					mFinishCallback);
 			break;
 		default:
 			break;
@@ -178,6 +184,12 @@ public class GameFragment extends Fragment implements OnClickListener {
 		mActivityCallback = (ActivityCallback) activity;
 		mSoundManager = mActivityCallback.getSoundManager();
 		super.onAttach(activity);
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		mGameManager.reset();
 	}
 
 }

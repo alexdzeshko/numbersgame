@@ -33,10 +33,12 @@ public class RememberMore extends CommonMode {
 				mResultTextView.setText("You pressed " + button
 						+ ". Press next number");
 			} else {
+				scorePlus();
 				isTyping = false;
 				showNext();
 			}
 		} else if (mQueueOld.peek() == null && noMistakes) {
+			scorePlus();
 			showNext();
 		} else {
 			noMistakes = false;
@@ -46,6 +48,7 @@ public class RememberMore extends CommonMode {
 
 	@Override
 	public void startNewGame() {
+		resetScore();
 		noMistakes = true;
 		mResultTextView.setText("");
 		reset();
@@ -65,7 +68,7 @@ public class RememberMore extends CommonMode {
 		super.gameOver();
 		reset();
 		changeViewColor(mResultTextView, R.color.red);
-		mListener.finish();
+		mListener.finish(mScore);
 	}
 
 	public void showNext() {
@@ -76,6 +79,12 @@ public class RememberMore extends CommonMode {
 
 	@Override
 	public void theTimeHasEnded() {
+		mListener.finish(mScore);
+		
+	}
+
+	@Override
+	public void prolongate() {
 		// TODO Auto-generated method stub
 		
 	}

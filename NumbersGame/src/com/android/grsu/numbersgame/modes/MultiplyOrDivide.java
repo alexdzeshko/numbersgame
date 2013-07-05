@@ -60,7 +60,7 @@ public class MultiplyOrDivide extends CommonMode {
 				"Congratulations! you guessed it.. Changing task");
 		changeViewColor(mResultTextView, R.color.green);
 		playSignal(SoundManager.WIN);
-		mListener.finish();
+		mListener.finish(mScore);
 	}
 
 	private void resume() {
@@ -117,7 +117,7 @@ public class MultiplyOrDivide extends CommonMode {
 	public void gameOver() {
 		super.gameOver();
 		changeViewColor(mResultTextView, R.color.red);
-		mListener.finish();
+		mListener.finish(mScore);
 	}
 
 	@Override
@@ -133,6 +133,12 @@ public class MultiplyOrDivide extends CommonMode {
 
 	@Override
 	public void theTimeHasEnded() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void prolongate() {
 		// TODO Auto-generated method stub
 		
 	}

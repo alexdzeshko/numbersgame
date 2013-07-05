@@ -18,7 +18,7 @@ public abstract class CommonMode {
 	protected TextView mTaskTextView, mResultTextView, mTextViewTimer, mTextViewScore;
 	protected boolean isPlaying;
 
-	private int mScore;
+	protected int mScore;
 
 	private CountDownTimer timer;
 
@@ -61,7 +61,7 @@ public abstract class CommonMode {
 		mTextViewScore = textViewScore;
 		mRandom = new Random();
 		mListener = listener;
-		timer = new CountDownTimer(10000, 1000) {
+		timer = new CountDownTimer(11000, 1000) {
 
 			@Override
 			public void onTick(long millisUntilFinished) {
@@ -72,6 +72,7 @@ public abstract class CommonMode {
 
 			@Override
 			public void onFinish() {
+				mTextViewTimer.setText("0");
 				theTimeHasEnded();
 
 			}
@@ -105,6 +106,8 @@ public abstract class CommonMode {
 	
 	public abstract void startNewGame();
 
+	public abstract void prolongate();
+	
 	public void reset(){
 		
 		timer.cancel();
@@ -114,5 +117,6 @@ public abstract class CommonMode {
 		mScore = 0;
 		mTextViewScore.setText(String.valueOf(mScore));
 	}
+
 }
 
