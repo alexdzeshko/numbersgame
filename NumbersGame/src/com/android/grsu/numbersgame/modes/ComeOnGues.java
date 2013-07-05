@@ -94,6 +94,7 @@ public class ComeOnGues extends CommonMode {
 	@Override
 	public void gameOver() {
 		super.gameOver();
+		timerStop();
 		changeViewColor(mResultTextView, R.color.red);
 		changeViewText(mResultTextView, "You Lose");
 		mListener.finish(mScore);

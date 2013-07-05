@@ -56,7 +56,7 @@ public class GameFragment extends Fragment implements OnClickListener {
 				AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(
 						ContextHolder.getContext());
 				dialogBuilder
-						.setMessage("Your score is " + score + "!\n New game?")
+						.setMessage("Your score is " + score + "!\nPlay again?")
 						.setPositiveButton("Yes",
 								new DialogInterface.OnClickListener() {
 

@@ -28,7 +28,11 @@ public class SummOrSubtract extends CommonMode {
 	private void makeGuess(int button) {
 		if (mRightAnswer < 10) {
 			if (mRightAnswer == button) {
-				finish();
+				scorePlus();
+				if (!highScore()) {
+					prolongate();
+				} else
+					finish();
 			} else {
 				gameOver();
 			}
@@ -44,7 +48,11 @@ public class SummOrSubtract extends CommonMode {
 			}
 			if (mCounter == 1) {
 				if (mRightAnswer % 10 == button) {
-					finish();
+					scorePlus();
+					if (!highScore()) {
+						prolongate();
+					} else
+						finish();
 					return;
 				} else {
 					gameOver();
@@ -55,8 +63,9 @@ public class SummOrSubtract extends CommonMode {
 	}
 
 	private void finish() {
+		timerStop();
 		changeViewText(mResultTextView,
-				"Congratulations! you guessed it.. Changing task");
+				"Congratulations!");
 		changeViewColor(mResultTextView, R.color.green);
 		playSignal(SoundManager.WIN);
 		mListener.finish(mScore);
@@ -113,17 +122,21 @@ public class SummOrSubtract extends CommonMode {
 	public void startNewGame() {
 		reset();
 		prepareTask();
+		timerStart();
 	}
 
 	@Override
 	public void gameOver() {
 		super.gameOver();
+		timerStop();
 		changeViewColor(mResultTextView, R.color.red);
 		mListener.finish(mScore);
 	}
 
 	@Override
 	public void reset() {
+		resetScore();
+		timerStop();
 		mCounter = 0;
 		changeViewText(mTaskTextView, "");
 		changeViewText(mResultTextView, "");
@@ -132,14 +145,18 @@ public class SummOrSubtract extends CommonMode {
 
 	@Override
 	public void theTimeHasEnded() {
-		// TODO Auto-generated method stub
+		gameOver();
 		
 	}
 
 	@Override
 	public void prolongate() {
-		// TODO Auto-generated method stub
-		
+		timerStop();
+		mCounter = 0;
+		changeViewText(mResultTextView, "");
+		changeViewColor(mResultTextView, R.color.white);
+		prepareTask();
+		timerStart();
 	}
 
 }

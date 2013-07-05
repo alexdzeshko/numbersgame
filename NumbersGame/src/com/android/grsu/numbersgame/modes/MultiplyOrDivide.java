@@ -22,14 +22,20 @@ public class MultiplyOrDivide extends CommonMode {
 	private boolean mOperation;
 
 	public MultiplyOrDivide(Context context, TextView taskTextView,
-			TextView resultTextView, TextView mTextViewTimer, TextView mTextViewScore, OnFinishListener finishCallback) {
-		super(context, taskTextView, resultTextView, mTextViewTimer, mTextViewScore, finishCallback);
+			TextView resultTextView, TextView mTextViewTimer,
+			TextView mTextViewScore, OnFinishListener finishCallback) {
+		super(context, taskTextView, resultTextView, mTextViewTimer,
+				mTextViewScore, finishCallback);
 	}
 
 	private void makeGuess(int button) {
 		if (mRightAnswer < 10) {
 			if (mRightAnswer == button) {
-				finish();
+				scorePlus();
+				if (!highScore()) {
+					prolongate();
+				} else
+					finish();
 			} else {
 				gameOver();
 			}
@@ -45,7 +51,11 @@ public class MultiplyOrDivide extends CommonMode {
 			}
 			if (mCounter == 1) {
 				if (mRightAnswer % 10 == button) {
-					finish();
+					scorePlus();
+					if (!highScore()) {
+						prolongate();
+					} else
+						finish();
 					return;
 				} else {
 					gameOver();
@@ -56,6 +66,7 @@ public class MultiplyOrDivide extends CommonMode {
 	}
 
 	private void finish() {
+		timerStop();
 		changeViewText(mResultTextView,
 				"Congratulations! you guessed it.. Changing task");
 		changeViewColor(mResultTextView, R.color.green);
@@ -111,17 +122,21 @@ public class MultiplyOrDivide extends CommonMode {
 	public void startNewGame() {
 		reset();
 		prepareTask();
+		timerStart();
 	}
 
 	@Override
 	public void gameOver() {
 		super.gameOver();
+		timerStop();
 		changeViewColor(mResultTextView, R.color.red);
 		mListener.finish(mScore);
 	}
 
 	@Override
 	public void reset() {
+		resetScore();
+		timerStop();
 		mCounter = 0;
 		mRightAnswer = 0;
 		mSecondArithmeticMember = 0;
@@ -133,14 +148,19 @@ public class MultiplyOrDivide extends CommonMode {
 
 	@Override
 	public void theTimeHasEnded() {
-		// TODO Auto-generated method stub
-		
+		gameOver();
+
 	}
 
 	@Override
 	public void prolongate() {
-		// TODO Auto-generated method stub
-		
+		timerStop();
+		mCounter = 0;
+		changeViewText(mResultTextView, "");
+		changeViewColor(mResultTextView, R.color.white);
+		prepareTask();
+		timerStart();
+
 	}
 
 }

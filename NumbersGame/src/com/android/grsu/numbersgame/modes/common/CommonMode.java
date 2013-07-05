@@ -61,7 +61,7 @@ public abstract class CommonMode {
 		mTextViewScore = textViewScore;
 		mRandom = new Random();
 		mListener = listener;
-		timer = new CountDownTimer(11000, 1000) {
+		timer = new CountDownTimer(10000, 1000) {
 
 			@Override
 			public void onTick(long millisUntilFinished) {
@@ -96,7 +96,7 @@ public abstract class CommonMode {
 	}
 
 	public void gameOver() {
-		reset();
+		//reset();
 		playSignal(SoundManager.LOSS);
 	}
 

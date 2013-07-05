@@ -25,6 +25,7 @@ public class GuessNumber extends CommonMode {
 	@Override
 	public void gameOver() {
 		super.gameOver();
+		timerStop();
 		changeViewColor(R.color.red);
 		mListener.finish(mScore);
 	}

@@ -66,6 +66,7 @@ public class RememberMore extends CommonMode {
 	@Override
 	public void gameOver() {
 		super.gameOver();
+		timerStop();
 		reset();
 		changeViewColor(mResultTextView, R.color.red);
 		mListener.finish(mScore);

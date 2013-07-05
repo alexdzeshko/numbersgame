@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.android.grsu.numbersgame.callbacks.ActivityCallback;
+import com.android.grsu.numbersgame.fragment.DummyFragment;
 import com.android.grsu.numbersgame.fragment.GameFragment;
 import com.android.grsu.numbersgame.sound.SoundManager;
 
@@ -39,7 +40,11 @@ public class MainActivity extends FragmentActivity implements ActivityCallback {
 				R.layout.adapter_drawer, mModeTitles));
 		// Set the list's click listener
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-		//selectItem(0);
+		
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		fragmentManager.beginTransaction()
+				.replace(R.id.content_frame, new DummyFragment()).commit();
+		
 		mDrawerLayout.openDrawer(mDrawerList);
 		mSoundManager = new SoundManager(this, R.raw.fon);
 	}
@@ -97,6 +102,7 @@ public class MainActivity extends FragmentActivity implements ActivityCallback {
 	private void selectItem(int position) {
 		// Create a new fragment and specify the planet to show based on
 		// position
+		
 		Fragment fragment = new GameFragment();
 		Bundle args = new Bundle();
 		args.putInt(GameFragment.MODE_NUMBER, position);
