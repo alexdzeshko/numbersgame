@@ -11,10 +11,9 @@
     <!-- Modes -->
     <string name="mode1">Guess number</string>
     <string name="mode2">Remember more</string>
-    <string name="mode3">mode3</string>
-    <string name="mode4">mode4</string>
-    <string name="mode5">mode5</string>
-    <string name="mode6">mode6</string>
+    <string name="mode3">Multiply or divide</string>
+    <string name="mode4">Summ or substract</string>
+    <string name="mode5">Come on guess</string>
 
     <string-array name="modes_array">
         <item>@string/mode1</item>
@@ -22,7 +21,6 @@
         <item>@string/mode3</item>
         <item>@string/mode4</item>
         <item>@string/mode5</item>
-        <item>@string/mode6</item>
     </string-array>
 
     <!-- Buttons -->

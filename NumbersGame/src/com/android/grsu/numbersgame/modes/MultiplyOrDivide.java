@@ -115,6 +115,7 @@ public class MultiplyOrDivide extends CommonMode {
 
 	@Override
 	public void gameOver() {
+		super.gameOver();
 		reset();
 		changeViewColor(mResultTextView, R.color.red);
 		mListener.finish();

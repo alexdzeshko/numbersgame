@@ -6,6 +6,7 @@ import android.content.Context;
 import android.widget.TextView;
 
 import com.android.grsu.numbersgame.callbacks.OnFinishListener;
+import com.android.grsu.numbersgame.sound.SoundManager;
 
 public abstract class CommonMode extends IMode {
 
@@ -39,7 +40,9 @@ public abstract class CommonMode extends IMode {
 		return mRandom.nextBoolean();
 	}
 
-	public abstract void gameOver();
+	public void gameOver(){
+		playSignal(SoundManager.LOSS);
+	}
 
 	public abstract void reset();
 

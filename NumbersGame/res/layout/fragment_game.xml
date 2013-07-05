@@ -30,7 +30,7 @@
                 android:background="@color/Blue"
                 android:orientation="vertical" >
 
-                <Button
+                <com.android.grsu.numbersgame.view.DraggableButton
                     android:id="@+id/button0"
                     style="@style/styleButton"
                     android:background="@drawable/b0" />
@@ -43,7 +43,7 @@
                 android:background="@color/Aqua"
                 android:orientation="vertical" >
 
-                <Button
+                <com.android.grsu.numbersgame.view.DraggableButton
                     android:id="@+id/button1"
                     style="@style/styleButton"
                     android:background="@drawable/b1" />
@@ -56,7 +56,7 @@
                 android:background="@color/Green"
                 android:orientation="vertical" >
 
-                <Button
+                <com.android.grsu.numbersgame.view.DraggableButton
                     android:id="@+id/button2"
                     style="@style/styleButton"
                     android:background="@drawable/b2" />
@@ -69,7 +69,7 @@
                 android:background="@color/Yellow"
                 android:orientation="vertical" >
 
-                <Button
+                <com.android.grsu.numbersgame.view.DraggableButton
                     android:id="@+id/button3"
                     style="@style/styleButton"
                     android:background="@drawable/b3" />
@@ -85,7 +85,7 @@
                 android:background="@color/Violet"
                 android:orientation="vertical" >
 
-                <Button
+                <com.android.grsu.numbersgame.view.DraggableButton
                     android:id="@+id/button4"
                     style="@style/styleButton"
                     android:background="@drawable/b4" />
@@ -98,7 +98,7 @@
                 android:background="@color/Red"
                 android:orientation="vertical" >
 
-                <Button
+                <com.android.grsu.numbersgame.view.DraggableButton
                     android:id="@+id/button5"
                     style="@style/styleButton"
                     android:background="@drawable/b5" />
@@ -111,7 +111,7 @@
                 android:background="@color/Orange"
                 android:orientation="vertical" >
 
-                <Button
+                <com.android.grsu.numbersgame.view.DraggableButton
                     android:id="@+id/button6"
                     style="@style/styleButton"
                     android:background="@drawable/b6" />
@@ -127,7 +127,7 @@
                 android:background="@color/GreenYellow"
                 android:orientation="vertical" >
 
-                <Button
+                <com.android.grsu.numbersgame.view.DraggableButton
                     android:id="@+id/button7"
                     style="@style/styleButton"
                     android:background="@drawable/b7" />
@@ -140,7 +140,7 @@
                 android:background="@color/BlueViolet"
                 android:orientation="vertical" >
 
-                <Button
+                <com.android.grsu.numbersgame.view.DraggableButton
                     android:id="@+id/button8"
                     style="@style/styleButton"
                     android:background="@drawable/b8" />
@@ -156,19 +156,13 @@
                 android:background="@color/Gray"
                 android:orientation="vertical" >
 
-                <Button
+                <com.android.grsu.numbersgame.view.DraggableButton
                     android:id="@+id/button9"
                     style="@style/styleButton"
                     android:background="@drawable/b9" />
             </LinearLayout>
         </TableRow>
     </TableLayout>
-
-    <TextView
-        style="@style/styleText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/result" />
 
     <TextView
         android:id="@+id/text_view_results"
