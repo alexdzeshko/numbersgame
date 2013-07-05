@@ -1,6 +1,7 @@
 package com.android.grsu.numbersgame.modes;
 
 import android.content.Context;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -16,8 +17,8 @@ public class GuessNumber extends CommonMode {
 	private int mRightNumber, mAttempts;
 
 	public GuessNumber(Context context, TextView taskView, TextView resultView,
-			TextView mTextViewTimer, OnFinishListener listener) {
-		super(context, taskView, resultView, mTextViewTimer, listener);
+			TextView mTextViewTimer, TextView mTextViewScore, OnFinishListener listener) {
+		super(context, taskView, resultView, mTextViewTimer, mTextViewScore, listener);
 		changeRightNumber();
 	}
 
@@ -49,6 +50,7 @@ public class GuessNumber extends CommonMode {
 			changeViewText("More than " + guessNumber);
 		}
 		if (guessNumber == mRightNumber) {
+			scorePlus();
 			changeViewText("Congratulations! you guessed it.. Changing number");
 			changeViewColor(R.color.green);
 			playSignal(SoundManager.WIN);
@@ -56,10 +58,17 @@ public class GuessNumber extends CommonMode {
 			timerStop();
 			// mListener.finish();
 			if (!highScore()) {
-				scorePlus();
-				startNewGame();
+				prolongate();
 			} else
-				mListener.finish();
+				new Handler().postDelayed(new Runnable() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						mListener.finish();
+						
+					}
+				}, 1000);
 			return;
 		}
 		if (mAttempts == 4) {
@@ -93,6 +102,7 @@ public class GuessNumber extends CommonMode {
 	@Override
 	public void startNewGame() {
 		reset();
+		resetScore();
 		mTaskTextView.setText("Guess Number");
 		changeViewColor(R.color.white);
 		timerStart();
@@ -112,4 +122,11 @@ public class GuessNumber extends CommonMode {
 		mResultTextView.setText("");
 	}
 
+	public void prolongate(){
+		timerStop();
+		timerStart();
+		changeRightNumber();
+		mAttempts = 0;
+		mResultTextView.setText("");
+	}
 }

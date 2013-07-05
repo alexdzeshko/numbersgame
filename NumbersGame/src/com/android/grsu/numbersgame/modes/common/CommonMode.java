@@ -15,7 +15,7 @@ public abstract class CommonMode {
 	private Random mRandom;
 	protected Context mContext;
 	protected OnFinishListener mListener;
-	protected TextView mTaskTextView, mResultTextView, mTextViewTimer;
+	protected TextView mTaskTextView, mResultTextView, mTextViewTimer, mTextViewScore;
 	protected boolean isPlaying;
 
 	private int mScore;
@@ -36,8 +36,9 @@ public abstract class CommonMode {
 					"SoundManager is not setted or setted to null");
 	}
 
-	public int scorePlus() {
-		return ++mScore;
+	public void scorePlus() {
+		++mScore;
+		mTextViewScore.setText(String.valueOf(mScore));
 	}
 
 	public boolean highScore(){
@@ -52,11 +53,12 @@ public abstract class CommonMode {
 	}
 
 	protected CommonMode(Context context, TextView taskView,
-			TextView resultView, TextView timerT, OnFinishListener listener) {
+			TextView resultView, TextView timerT, TextView textViewScore, OnFinishListener listener) {
 		mContext = context;
 		mTaskTextView = taskView;
 		mResultTextView = resultView;
 		mTextViewTimer = timerT;
+		mTextViewScore = textViewScore;
 		mRandom = new Random();
 		mListener = listener;
 		timer = new CountDownTimer(10000, 1000) {
@@ -104,9 +106,13 @@ public abstract class CommonMode {
 	public abstract void startNewGame();
 
 	public void reset(){
-		mScore = 0;
+		
 		timer.cancel();
 	}
 
+	public void resetScore(){
+		mScore = 0;
+		mTextViewScore.setText(String.valueOf(mScore));
+	}
 }
 

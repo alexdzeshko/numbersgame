@@ -21,8 +21,8 @@ public class SummOrSubtract extends CommonMode {
 	private boolean mOperation;
 
 	public SummOrSubtract(Context context, TextView tastView,
-			TextView resultView, TextView mTextViewTimer, OnFinishListener finishCallback) {
-		super(context, tastView, resultView, mTextViewTimer, finishCallback);
+			TextView resultView, TextView mTextViewTimer, TextView mTextViewScore, OnFinishListener finishCallback) {
+		super(context, tastView, resultView, mTextViewTimer, mTextViewScore, finishCallback);
 	}
 
 	private void makeGuess(int button) {

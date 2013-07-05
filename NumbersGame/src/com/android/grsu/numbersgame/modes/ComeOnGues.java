@@ -26,8 +26,8 @@ public class ComeOnGues extends CommonMode {
 
 	@SuppressLint("UseSparseArrays")
 	public ComeOnGues(Context context, TextView taskView, TextView resultView,
-			OnFinishListener listener) {
-		super(context, taskView, resultView, taskView, listener);
+			TextView mTextViewTimer, TextView mTextViewScore, OnFinishListener listener) {
+		super(context, taskView, resultView, taskView, mTextViewScore, listener);
 		mResources = mContext.getResources();
 		mDrawables = new HashMap<Integer, Drawable>();
 		mAnimals = new HashMap<Integer, String>();

@@ -13,8 +13,8 @@ import com.android.grsu.numbersgame.modes.common.CommonMode;
 public class RememberMore extends CommonMode {
 
 	public RememberMore(Context context, TextView tastView,
-			TextView resultView, TextView mTextViewTimer, OnFinishListener finishCallback) {
-		super(context, tastView, resultView, mTextViewTimer, finishCallback);
+			TextView resultView, TextView mTextViewTimer, TextView mTextViewScore, OnFinishListener finishCallback) {
+		super(context, tastView, resultView, mTextViewTimer, mTextViewScore, finishCallback);
 	}
 
 	private Queue<Integer> mQueueNew, mQueueOld;

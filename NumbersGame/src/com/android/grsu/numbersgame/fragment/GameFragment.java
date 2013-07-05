@@ -36,7 +36,7 @@ public class GameFragment extends Fragment implements OnClickListener {
 	public static final String MODE = "MODE";
 
 	private int mMode;
-	private TextView mTextViewTask, mTextViewResult, mTextViewTimer;
+	private TextView mTextViewTask, mTextViewResult, mTextViewTimer, mTextViewScore;
 	private CommonMode mGameManager;
 	private ActivityCallback mActivityCallback;
 	private OnFinishListener mFinishCallback;
@@ -103,23 +103,23 @@ public class GameFragment extends Fragment implements OnClickListener {
 		switch (mMode) {
 		case 0:
 			mGameManager = new GuessNumber(getActivity(), mTextViewTask,
-					mTextViewResult, mTextViewTimer, mFinishCallback);
+					mTextViewResult, mTextViewTimer, mTextViewScore, mFinishCallback);
 			break;
 		case 1:
 			mGameManager = new RememberMore(getActivity(), mTextViewTask,
-					mTextViewResult, mTextViewTimer, mFinishCallback);
+					mTextViewResult, mTextViewTimer, mTextViewScore, mFinishCallback);
 			break;
 		case 2:
 			mGameManager = new MultiplyOrDivide(getActivity(), mTextViewTask,
-					mTextViewResult, mTextViewTimer, mFinishCallback);
+					mTextViewResult, mTextViewTimer, mTextViewScore, mFinishCallback);
 			break;
 		case 3:
 			mGameManager = new SummOrSubtract(getActivity(), mTextViewTask,
-					mTextViewResult, mTextViewTimer, mFinishCallback);
+					mTextViewResult, mTextViewTimer, mTextViewScore, mFinishCallback);
 			break;
 		case 4:
 			mGameManager = new ComeOnGues(getActivity(), mTextViewTask,
-					mTextViewResult, mFinishCallback);
+					mTextViewResult, mTextViewTimer, mTextViewScore, mFinishCallback);
 			break;
 		default:
 			break;
@@ -135,6 +135,7 @@ public class GameFragment extends Fragment implements OnClickListener {
 		mTextViewTask = (TextView) view.findViewById(R.id.text_view_task);
 		mTextViewResult = (TextView) view.findViewById(R.id.text_view_results);
 		mTextViewTimer = (TextView) view.findViewById(R.id.timer);
+		mTextViewScore = (TextView) view.findViewById(R.id.score);
 		mButtons[1] = (Button) view.findViewById(R.id.button1);
 		mButtons[2] = (Button) view.findViewById(R.id.button2);
 		mButtons[3] = (Button) view.findViewById(R.id.button3);

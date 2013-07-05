@@ -22,8 +22,8 @@ public class MultiplyOrDivide extends CommonMode {
 	private boolean mOperation;
 
 	public MultiplyOrDivide(Context context, TextView taskTextView,
-			TextView resultTextView, TextView mTextViewTimer, OnFinishListener finishCallback) {
-		super(context, taskTextView, resultTextView, mTextViewTimer, finishCallback);
+			TextView resultTextView, TextView mTextViewTimer, TextView mTextViewScore, OnFinishListener finishCallback) {
+		super(context, taskTextView, resultTextView, mTextViewTimer, mTextViewScore, finishCallback);
 	}
 
 	private void makeGuess(int button) {
