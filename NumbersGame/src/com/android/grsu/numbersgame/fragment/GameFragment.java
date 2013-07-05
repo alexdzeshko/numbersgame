@@ -43,7 +43,6 @@ public class GameFragment extends Fragment implements OnClickListener {
 	private boolean mHardMode;
 	private Button[] mButtons = new Button[10];
 
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -53,7 +52,8 @@ public class GameFragment extends Fragment implements OnClickListener {
 			@Override
 			public void finish() {
 				Context c = ContextHolder.getContext();
-				AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(c);
+				AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(
+						getActivity());
 				dialogBuilder
 						.setMessage("New game?")
 						.setPositiveButton("Yes",
@@ -77,33 +77,31 @@ public class GameFragment extends Fragment implements OnClickListener {
 								}).show();
 			}
 		};
-=======
 		mHardMode = getArguments().getBoolean(MODE);
-		
+
 	}
->>>>>>> d888ea43f45e2cb7d33281d90e7dd093abe4e81f
 
 	private void randomize() {
-		if(mHardMode){
+		if (mHardMode) {
 			Random r = new Random();
-			for(int i = 0; i<mButtons.length;i++){
+			for (int i = 0; i < mButtons.length; i++) {
 				Button buttonA = mButtons[r.nextInt(9)];
 				int a = (Integer) buttonA.getTag();
 				Drawable dra = buttonA.getBackground();
-				
+
 				buttonA.setTag(mButtons[i].getTag());
 				buttonA.setBackgroundDrawable(mButtons[i].getBackground());
 				mButtons[i].setTag(a);
 				mButtons[i].setBackgroundDrawable(dra);
 			}
 		}
-		
+
 	}
 
 	private void initMode() {
 		switch (mMode) {
 		case 0:
-			mGameManager = GuessNumber.getInstance(getActivity(),
+			mGameManager = new GuessNumber(getActivity(), mTextViewTask,
 					mTextViewResult, mFinishCallback);
 			break;
 		case 1:
@@ -111,12 +109,12 @@ public class GameFragment extends Fragment implements OnClickListener {
 					mTextViewResult, mFinishCallback);
 			break;
 		case 2:
-			mGameManager = MultiplyOrDivide.getInstance(getActivity(),
-					mTextViewTask, mTextViewResult, mFinishCallback);
+			mGameManager = new MultiplyOrDivide(getActivity(), mTextViewTask,
+					mTextViewResult, mFinishCallback);
 			break;
 		case 3:
-			mGameManager = SummOrSubtract.getInstance(getActivity(),
-					mTextViewTask, mTextViewResult, mFinishCallback);
+			mGameManager = new SummOrSubtract(getActivity(), mTextViewTask,
+					mTextViewResult, mFinishCallback);
 			break;
 		case 4:
 			// mGameManager = ComeOnGues.getInstance(getActivity(),
@@ -146,11 +144,11 @@ public class GameFragment extends Fragment implements OnClickListener {
 		mButtons[8] = (Button) view.findViewById(R.id.button8);
 		mButtons[9] = (Button) view.findViewById(R.id.button9);
 		mButtons[0] = (Button) view.findViewById(R.id.button0);
-		for(int i = 0; i<mButtons.length; i++){
+		for (int i = 0; i < mButtons.length; i++) {
 			mButtons[i].setOnClickListener(this);
 			mButtons[i].setTag(i);
 		}
-			
+
 		randomize();
 
 		initMode();

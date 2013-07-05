@@ -8,6 +8,7 @@ import com.android.grsu.numbersgame.BuildConfig;
 import com.android.grsu.numbersgame.R;
 import com.android.grsu.numbersgame.callbacks.OnFinishListener;
 import com.android.grsu.numbersgame.modes.common.CommonMode;
+import com.android.grsu.numbersgame.sound.SoundManager;
 
 public class SummOrSubtract extends CommonMode {
 
@@ -19,21 +20,9 @@ public class SummOrSubtract extends CommonMode {
 	private int mCounter;
 	private boolean mOperation;
 
-	private static SummOrSubtract instance;
-
-	private SummOrSubtract(Context context, TextView tastView,
+	public SummOrSubtract(Context context, TextView tastView,
 			TextView resultView, OnFinishListener finishCallback) {
 		super(context, tastView, resultView, finishCallback);
-	}
-
-	public static SummOrSubtract getInstance(Context context,
-			TextView tastView, TextView resultView,
-			OnFinishListener finishCallback) {
-		if (instance == null) {
-			instance = new SummOrSubtract(context, tastView, resultView,
-					finishCallback);
-		}
-		return instance;
 	}
 
 	private void makeGuess(int button) {
@@ -69,8 +58,8 @@ public class SummOrSubtract extends CommonMode {
 		changeViewText(mResultTextView,
 				"Congratulations! you guessed it.. Changing task");
 		changeViewColor(mResultTextView, R.color.green);
+		playSignal(SoundManager.WIN);
 		mListener.finish();
-		reset();
 	}
 
 	private void resume() {
@@ -97,6 +86,7 @@ public class SummOrSubtract extends CommonMode {
 				mRightAnswer = mFirstArithmeticMember - mSecondArithmeticMember;
 			}
 		}
+		prepareTaskString();
 	}
 
 	private void prepareTaskString() {
@@ -123,7 +113,6 @@ public class SummOrSubtract extends CommonMode {
 	public void startNewGame() {
 		reset();
 		prepareTask();
-		prepareTaskString();
 	}
 
 	@Override

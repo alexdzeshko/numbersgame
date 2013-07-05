@@ -20,21 +20,9 @@ public class MultiplyOrDivide extends CommonMode {
 	private int mCounter;
 	private boolean mOperation;
 
-	private static MultiplyOrDivide instance;
-
-	private MultiplyOrDivide(Context context, TextView taskTextView,
+	public MultiplyOrDivide(Context context, TextView taskTextView,
 			TextView resultTextView, OnFinishListener finishCallback) {
 		super(context, taskTextView, resultTextView, finishCallback);
-	}
-
-	public static MultiplyOrDivide getInstance(Context context,
-			TextView taskTextView, TextView resultTextView,
-			OnFinishListener finishCallback) {
-		if (instance == null) {
-			instance = new MultiplyOrDivide(context, taskTextView,
-					resultTextView, finishCallback);
-		}
-		return instance;
 	}
 
 	private void makeGuess(int button) {

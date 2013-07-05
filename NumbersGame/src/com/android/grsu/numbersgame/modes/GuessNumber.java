@@ -15,34 +15,23 @@ import com.android.grsu.numbersgame.sound.SoundManager;
 public class GuessNumber extends IMode {
 
 	private static final String LOG_TAG = GuessNumber.class.getSimpleName();
-	// TODO make singleton
 	private int mRightNumber, mAttempts;
 	private Context mContext;
 	private Random mRandom;
-	private TextView mTextView;
+	private TextView mResultTextView, mTaskTextView;
 	private OnFinishListener mCallback;
 
-	private static GuessNumber instance;
-
-	private GuessNumber(Context context, TextView textView,
-			OnFinishListener finishCallback) {
+	public GuessNumber(Context context, TextView taskTextView,
+			TextView resultTextView, OnFinishListener finishCallback) {
 		mContext = context;
-		mTextView = textView;
+		mResultTextView = resultTextView;
+		mTaskTextView = taskTextView;
 		mRandom = new Random();
 		mCallback = finishCallback;
 		changeRightNumber();
 	}
 
-	public static GuessNumber getInstance(Context context, TextView textView,
-			OnFinishListener finishCallback) {
-		if (instance == null) {
-			instance = new GuessNumber(context, textView, finishCallback);
-		}
-		return instance;
-	}
-
 	public void gameOver() {
-		reset();
 		changeViewColor(R.color.red);
 		playSignal(SoundManager.LOSS);
 		mCallback.finish();
@@ -82,6 +71,7 @@ public class GuessNumber extends IMode {
 	private void reset() {
 		changeRightNumber();
 		mAttempts = 0;
+		mResultTextView.setText("");
 	}
 
 	private void changeRightNumber() {
@@ -89,12 +79,12 @@ public class GuessNumber extends IMode {
 	}
 
 	private void changeViewColor(int resColor) {
-		mTextView
-				.setBackgroundColor(mContext.getResources().getColor(resColor));
+		mResultTextView.setBackgroundColor(mContext.getResources().getColor(
+				resColor));
 	}
 
 	private void changeViewText(String text) {
-		mTextView.setText(text);
+		mResultTextView.setText(text);
 	}
 
 	@Override
@@ -107,8 +97,8 @@ public class GuessNumber extends IMode {
 
 	@Override
 	public void startNewGame() {
-		mTextView.setText("");
 		reset();
+		mTaskTextView.setText("Guess Number");
 		changeViewColor(R.color.white);
 
 	}
