@@ -8,6 +8,7 @@ import com.android.grsu.numbersgame.BuildConfig;
 import com.android.grsu.numbersgame.R;
 import com.android.grsu.numbersgame.callbacks.OnFinishListener;
 import com.android.grsu.numbersgame.modes.common.CommonMode;
+import com.android.grsu.numbersgame.sound.SoundManager;
 
 public class MultiplyOrDivide extends CommonMode {
 
@@ -58,8 +59,8 @@ public class MultiplyOrDivide extends CommonMode {
 		changeViewText(mResultTextView,
 				"Congratulations! you guessed it.. Changing task");
 		changeViewColor(mResultTextView, R.color.green);
+		playSignal(SoundManager.WIN);
 		mListener.finish();
-		reset();
 	}
 
 	private void resume() {
@@ -69,17 +70,19 @@ public class MultiplyOrDivide extends CommonMode {
 	}
 
 	private void prepareTask() {
-		mFirstArithmeticMember = nextRandom();
-		mSecondArithmeticMember = nextRandom();
 		mOperation = nextBoolean();
 		if (mOperation) {
+			mFirstArithmeticMember = nextRandom();
+			mSecondArithmeticMember = nextRandom();
 			mRightAnswer = mFirstArithmeticMember * mSecondArithmeticMember;
 		} else {
-			if (mFirstArithmeticMember > mSecondArithmeticMember) {
-				mRightAnswer = mFirstArithmeticMember / mSecondArithmeticMember;
-			} else {
-				mRightAnswer = mSecondArithmeticMember / mFirstArithmeticMember;
+			while (mSecondArithmeticMember == 0) {
+				mSecondArithmeticMember = nextRandom();
 			}
+			while (mRightAnswer == 0) {
+				mRightAnswer = nextRandom();
+			}
+			mFirstArithmeticMember = mRightAnswer * mSecondArithmeticMember;
 		}
 		prepareTaskString();
 	}
@@ -120,6 +123,9 @@ public class MultiplyOrDivide extends CommonMode {
 	@Override
 	public void reset() {
 		mCounter = 0;
+		mRightAnswer = 0;
+		mSecondArithmeticMember = 0;
+		mFirstArithmeticMember = 0;
 		changeViewText(mTaskTextView, "");
 		changeViewText(mResultTextView, "");
 		changeViewColor(mResultTextView, R.color.white);

@@ -22,6 +22,7 @@ import com.android.grsu.numbersgame.ContextHolder;
 import com.android.grsu.numbersgame.R;
 import com.android.grsu.numbersgame.callbacks.ActivityCallback;
 import com.android.grsu.numbersgame.callbacks.OnFinishListener;
+import com.android.grsu.numbersgame.modes.ComeOnGues;
 import com.android.grsu.numbersgame.modes.GuessNumber;
 import com.android.grsu.numbersgame.modes.MultiplyOrDivide;
 import com.android.grsu.numbersgame.modes.RememberMore;
@@ -117,9 +118,8 @@ public class GameFragment extends Fragment implements OnClickListener {
 					mTextViewResult, mFinishCallback);
 			break;
 		case 4:
-			// mGameManager = ComeOnGues.getInstance(getActivity(),
-			// mTextViewTask,
-			// mTextViewResult, imageView, mFinishCallback);
+			mGameManager = new ComeOnGues(getActivity(), mTextViewTask,
+					mTextViewResult, mFinishCallback);
 			break;
 		default:
 			break;

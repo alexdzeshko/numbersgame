@@ -78,11 +78,6 @@ public class SummOrSubtract extends CommonMode {
 			if (mFirstArithmeticMember > mSecondArithmeticMember) {
 				mRightAnswer = mFirstArithmeticMember - mSecondArithmeticMember;
 			} else {
-				if (mSecondArithmeticMember == 0) {
-					mSecondArithmeticMember++;
-				}
-				mSecondArithmeticMember = mSecondArithmeticMember
-						- mFirstArithmeticMember;
 				mRightAnswer = mFirstArithmeticMember - mSecondArithmeticMember;
 			}
 		}
@@ -96,8 +91,13 @@ public class SummOrSubtract extends CommonMode {
 		} else {
 			operation = " - ";
 		}
-		changeViewText(mTaskTextView, mFirstArithmeticMember + operation
-				+ mSecondArithmeticMember);
+		if (mFirstArithmeticMember > mSecondArithmeticMember) {
+			changeViewText(mTaskTextView, mFirstArithmeticMember + operation
+					+ mSecondArithmeticMember);
+		} else {
+			changeViewText(mTaskTextView, mSecondArithmeticMember + operation
+					+ mFirstArithmeticMember);
+		}
 	}
 
 	@Override
