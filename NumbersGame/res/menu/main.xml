@@ -1,9 +1,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/easy"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="@string/action_settings"/>
+        android:title="@string/easy_mode"/>
+    
+    <item
+        android:id="@+id/hard"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/hard_mode"/>
 
 </menu>

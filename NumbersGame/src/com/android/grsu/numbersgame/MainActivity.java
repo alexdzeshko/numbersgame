@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -24,6 +25,7 @@ public class MainActivity extends FragmentActivity implements ActivityCallback {
 	private DrawerLayout mDrawerLayout;
 	private SoundManager mSoundManager;
 
+	private boolean mHardMode;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -67,6 +69,21 @@ public class MainActivity extends FragmentActivity implements ActivityCallback {
 		return true;
 	}
 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.easy:
+			mHardMode = false;
+			break;
+		case R.id.hard:
+			mHardMode = true;
+			break;
+		default:
+			break;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
 	private class DrawerItemClickListener implements
 			ListView.OnItemClickListener {
 		@Override
@@ -83,6 +100,7 @@ public class MainActivity extends FragmentActivity implements ActivityCallback {
 		Fragment fragment = new GameFragment();
 		Bundle args = new Bundle();
 		args.putInt(GameFragment.MODE_NUMBER, position);
+		args.putBoolean(GameFragment.MODE, mHardMode);
 		fragment.setArguments(args);
 
 		// Insert the fragment by replacing any existing fragment
