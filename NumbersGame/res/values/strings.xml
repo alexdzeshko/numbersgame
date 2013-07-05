@@ -3,6 +3,8 @@
 
     <string name="app_name">NumbersGame</string>
     <string name="action_settings">Settings</string>
+    <string name="easy_mode">Easy mode</string>
+    <string name="hard_mode">Hard mode</string>
     <string name="hello_world">Hello world!</string>
     
     <string name="task">Task</string>
@@ -34,5 +36,7 @@
     <string name="button8">8</string>
     <string name="button9">9</string>
     <string name="button0">0</string>
+    
+    
     
 </resources>
