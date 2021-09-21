@@ -5,7 +5,6 @@ import java.util.Map;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.IntentSender.SendIntentException;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.widget.TextView;
@@ -37,29 +36,29 @@ public class ComeOnGues extends CommonMode {
 	}
 
 	private void putAnimals() {
-		mAnimals.put(0, "Кот");
-		mAnimals.put(1, "Верблюд");
-		mAnimals.put(2, "Хомяк");
-		mAnimals.put(3, "Божья коровка");
-		mAnimals.put(4, "Заяц");
-		mAnimals.put(5, "Собака");
-		mAnimals.put(6, "Слон");
-		mAnimals.put(7, "Бабочка");
-		mAnimals.put(8, "Симпсоны");
-		mAnimals.put(9, "Сокол");
+		mAnimals.put(0, "пїЅпїЅпїЅ");
+		mAnimals.put(1, "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
+		mAnimals.put(2, "пїЅпїЅпїЅпїЅпїЅ");
+		mAnimals.put(3, "пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
+		mAnimals.put(4, "пїЅпїЅпїЅпїЅ");
+		mAnimals.put(5, "пїЅпїЅпїЅпїЅпїЅпїЅ");
+		mAnimals.put(6, "пїЅпїЅпїЅпїЅ");
+		mAnimals.put(7, "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
+		mAnimals.put(8, "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
+		mAnimals.put(9, "пїЅпїЅпїЅпїЅпїЅ");
 	}
 
 	private void putDrawables() {
-		mDrawables.put(0, mResources.getDrawable(R.id.button0));
-		mDrawables.put(1, mResources.getDrawable(R.id.button1));
-		mDrawables.put(2, mResources.getDrawable(R.id.button2));
-		mDrawables.put(3, mResources.getDrawable(R.id.button3));
-		mDrawables.put(4, mResources.getDrawable(R.id.button4));
-		mDrawables.put(5, mResources.getDrawable(R.id.button5));
-		mDrawables.put(6, mResources.getDrawable(R.id.button6));
-		mDrawables.put(7, mResources.getDrawable(R.id.button7));
-		mDrawables.put(8, mResources.getDrawable(R.id.button8));
-		mDrawables.put(9, mResources.getDrawable(R.id.button9));
+		mDrawables.put(0, mResources.getDrawable(R.drawable.b0));
+		mDrawables.put(1, mResources.getDrawable(R.drawable.b1));
+		mDrawables.put(2, mResources.getDrawable(R.drawable.b2));
+		mDrawables.put(3, mResources.getDrawable(R.drawable.b3));
+		mDrawables.put(4, mResources.getDrawable(R.drawable.b4));
+		mDrawables.put(5, mResources.getDrawable(R.drawable.b5));
+		mDrawables.put(6, mResources.getDrawable(R.drawable.b6));
+		mDrawables.put(7, mResources.getDrawable(R.drawable.b7));
+		mDrawables.put(8, mResources.getDrawable(R.drawable.b8));
+		mDrawables.put(9, mResources.getDrawable(R.drawable.b9));
 	}
 
 	private void makeGuess(int buttonPressed) {

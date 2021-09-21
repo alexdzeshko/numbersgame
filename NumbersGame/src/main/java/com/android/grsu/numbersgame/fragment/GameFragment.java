@@ -1,14 +1,8 @@
 package com.android.grsu.numbersgame.fragment;
 
-import java.util.Random;
-
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,6 +11,9 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
 
 import com.android.grsu.numbersgame.ContextHolder;
 import com.android.grsu.numbersgame.R;
@@ -29,6 +26,8 @@ import com.android.grsu.numbersgame.modes.RememberMore;
 import com.android.grsu.numbersgame.modes.SummOrSubtract;
 import com.android.grsu.numbersgame.modes.common.CommonMode;
 import com.android.grsu.numbersgame.sound.SoundManager;
+
+import java.util.Random;
 
 public class GameFragment extends Fragment implements OnClickListener {
 
@@ -43,7 +42,7 @@ public class GameFragment extends Fragment implements OnClickListener {
 	private OnFinishListener mFinishCallback;
 	private SoundManager mSoundManager;
 	private boolean mHardMode;
-	private Button[] mButtons = new Button[10];
+	private final Button[] mButtons = new Button[10];
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -58,43 +57,27 @@ public class GameFragment extends Fragment implements OnClickListener {
 				dialogBuilder
 						.setMessage("Your score is " + score + "!\nPlay again?")
 						.setPositiveButton("Yes",
-								new DialogInterface.OnClickListener() {
-
-									@Override
-									public void onClick(DialogInterface dialog,
-											int which) {
-										mGameManager.startNewGame();
-									};
-
-								})
+								(dialog, which) -> mGameManager.startNewGame())
 						.setNegativeButton("No",
-								new DialogInterface.OnClickListener() {
-
-									@Override
-									public void onClick(DialogInterface dialog,
-											int which) {
-										mActivityCallback.openDrawer(true);
-									}
-								}).show();
+								(dialog, which) -> mActivityCallback.openDrawer(true)).show();
 			}
 		};
 		mHardMode = getArguments().getBoolean(MODE);
 
 	}
 
-	@SuppressWarnings("deprecation")
 	private void randomize() {
 		if (mHardMode) {
 			Random r = new Random();
-			for (int i = 0; i < mButtons.length; i++) {
+			for (Button mButton : mButtons) {
 				Button buttonA = mButtons[r.nextInt(9)];
 				int a = (Integer) buttonA.getTag();
 				Drawable dra = buttonA.getBackground();
 
-				buttonA.setTag(mButtons[i].getTag());
-				buttonA.setBackgroundDrawable(mButtons[i].getBackground());
-				mButtons[i].setTag(a);
-				mButtons[i].setBackgroundDrawable(dra);
+				buttonA.setTag(mButton.getTag());
+				buttonA.setBackgroundDrawable(mButton.getBackground());
+				mButton.setTag(a);
+				mButton.setBackgroundDrawable(dra);
 			}
 		}
 
@@ -138,20 +121,20 @@ public class GameFragment extends Fragment implements OnClickListener {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_game, null);
-		mTextViewTask = (TextView) view.findViewById(R.id.text_view_task);
-		mTextViewResult = (TextView) view.findViewById(R.id.text_view_results);
-		mTextViewTimer = (TextView) view.findViewById(R.id.timer);
-		mTextViewScore = (TextView) view.findViewById(R.id.score);
-		mButtons[1] = (Button) view.findViewById(R.id.button1);
-		mButtons[2] = (Button) view.findViewById(R.id.button2);
-		mButtons[3] = (Button) view.findViewById(R.id.button3);
-		mButtons[4] = (Button) view.findViewById(R.id.button4);
-		mButtons[5] = (Button) view.findViewById(R.id.button5);
-		mButtons[6] = (Button) view.findViewById(R.id.button6);
-		mButtons[7] = (Button) view.findViewById(R.id.button7);
-		mButtons[8] = (Button) view.findViewById(R.id.button8);
-		mButtons[9] = (Button) view.findViewById(R.id.button9);
-		mButtons[0] = (Button) view.findViewById(R.id.button0);
+		mTextViewTask = view.findViewById(R.id.text_view_task);
+		mTextViewResult = view.findViewById(R.id.text_view_results);
+		mTextViewTimer = view.findViewById(R.id.timer);
+		mTextViewScore = view.findViewById(R.id.score);
+		mButtons[1] = view.findViewById(R.id.button1);
+		mButtons[2] = view.findViewById(R.id.button2);
+		mButtons[3] = view.findViewById(R.id.button3);
+		mButtons[4] = view.findViewById(R.id.button4);
+		mButtons[5] = view.findViewById(R.id.button5);
+		mButtons[6] = view.findViewById(R.id.button6);
+		mButtons[7] = view.findViewById(R.id.button7);
+		mButtons[8] = view.findViewById(R.id.button8);
+		mButtons[9] = view.findViewById(R.id.button9);
+		mButtons[0] = view.findViewById(R.id.button0);
 		for (int i = 0; i < mButtons.length; i++) {
 			mButtons[i].setOnClickListener(this);
 			mButtons[i].setTag(i);

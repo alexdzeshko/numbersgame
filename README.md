@@ -1,2 +1,2 @@
-numbersgame
+com.android.grsu.numbersgame
 ===========

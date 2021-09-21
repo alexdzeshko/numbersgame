@@ -43,11 +43,10 @@ public class MultiplyOrDivide extends CommonMode {
 			if (mCounter == 0) {
 				if (mRightAnswer / 10 == button) {
 					resume();
-					return;
 				} else {
 					gameOver();
-					return;
 				}
+				return;
 			}
 			if (mCounter == 1) {
 				if (mRightAnswer % 10 == button) {
@@ -56,10 +55,8 @@ public class MultiplyOrDivide extends CommonMode {
 						prolongate();
 					} else
 						finish();
-					return;
 				} else {
 					gameOver();
-					return;
 				}
 			}
 		}

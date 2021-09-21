@@ -9,13 +9,11 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
 
-import com.android.grsu.numbersgame.R;
+import androidx.appcompat.widget.AppCompatButton;
 
 @SuppressLint("ResourceAsColor")
-public class DraggableButton extends Button {
+public class DraggableButton extends AppCompatButton {
 
 	private static final String LOG_TAG = DraggableButton.class.getSimpleName();
 
